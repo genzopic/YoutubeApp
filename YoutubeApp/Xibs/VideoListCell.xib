@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cellId" id="7qa-DK-hDo" customClass="VideoListCell" customModule="YoutubeApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="442" height="367"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="h1T-Ca-cQj">
+                <rect key="frame" x="0.0" y="0.0" width="442" height="367"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ym7-I7-SDv">
+                        <rect key="frame" x="0.0" y="15" width="442" height="280"/>
+                        <color key="backgroundColor" systemColor="systemTealColor"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="280" id="tNQ-5i-naB"/>
+                        </constraints>
+                    </imageView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="b4l-ul-YqZ">
+                        <rect key="frame" x="10" y="305" width="40" height="40"/>
+                        <color key="backgroundColor" systemColor="systemRedColor"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="dFX-Ac-CFw"/>
+                            <constraint firstAttribute="width" secondItem="b4l-ul-YqZ" secondAttribute="height" multiplier="1:1" id="lG4-eV-zhZ"/>
+                        </constraints>
+                    </imageView>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="0MB-Md-vaF">
+                        <rect key="frame" x="60" y="305" width="372" height="35"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="タイトルがここに入ります" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fah-hO-scm">
+                                <rect key="frame" x="0.0" y="0.0" width="372" height="18"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="説明文がここに入ります" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7fE-P2-E70">
+                                <rect key="frame" x="0.0" y="18" width="372" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="0MB-Md-vaF" secondAttribute="trailing" constant="10" id="0x6-Nw-M55"/>
+                    <constraint firstItem="b4l-ul-YqZ" firstAttribute="leading" secondItem="h1T-Ca-cQj" secondAttribute="leading" constant="10" id="30j-Sk-0i0"/>
+                    <constraint firstItem="0MB-Md-vaF" firstAttribute="leading" secondItem="b4l-ul-YqZ" secondAttribute="trailing" constant="10" id="4ty-I6-cQW"/>
+                    <constraint firstItem="b4l-ul-YqZ" firstAttribute="top" secondItem="Ym7-I7-SDv" secondAttribute="bottom" constant="10" id="6mS-PK-W1d"/>
+                    <constraint firstItem="Ym7-I7-SDv" firstAttribute="top" secondItem="h1T-Ca-cQj" secondAttribute="top" constant="15" id="HKu-rb-hma"/>
+                    <constraint firstAttribute="trailing" secondItem="Ym7-I7-SDv" secondAttribute="trailing" id="SS5-0e-hT3"/>
+                    <constraint firstItem="0MB-Md-vaF" firstAttribute="top" secondItem="Ym7-I7-SDv" secondAttribute="bottom" constant="10" id="XOL-Xd-NHl"/>
+                    <constraint firstItem="Ym7-I7-SDv" firstAttribute="leading" secondItem="h1T-Ca-cQj" secondAttribute="leading" id="nbT-sa-e84"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <size key="customSize" width="442" height="367"/>
+            <connections>
+                <outlet property="channelImageView" destination="b4l-ul-YqZ" id="Sm8-lu-Rk5"/>
+                <outlet property="descriptionLabel" destination="7fE-P2-E70" id="zh4-5B-pIm"/>
+                <outlet property="thumbnailImageView" destination="Ym7-I7-SDv" id="I0c-sj-Qi5"/>
+                <outlet property="titileLabel" destination="fah-hO-scm" id="pzq-Ue-wQn"/>
+            </connections>
+            <point key="canvasLocation" x="446.37681159420293" y="87.388392857142847"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemTealColor">
+            <color red="0.35294117647058826" green="0.78431372549019607" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
