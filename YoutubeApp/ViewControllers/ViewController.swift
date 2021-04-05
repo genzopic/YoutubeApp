@@ -11,12 +11,16 @@ import Alamofire
 
 class ViewController: UIViewController {
     
+    
+    @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var videoListCollectionView: UICollectionView!
     private let cellId = "cellId"
     private var videoItems = [Item]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        profileImageView.layer.cornerRadius = profileImageView.frame.size.height / 2
         
         videoListCollectionView.delegate = self
         videoListCollectionView.dataSource = self
@@ -30,7 +34,7 @@ class ViewController: UIViewController {
         let parms = [
             "q": "camp"
         ]
-        APIRequest.shared.request(path: .search, parms: parms, type: Video.self) { (video) in
+        API.shared.request(path: .search, parms: parms, type: Video.self) { (video) in
             self.videoItems = video.items
             let id = self.videoItems[0].snippet.channelId
             self.fetchYoutubeChannelInfo(id: id)
@@ -41,7 +45,7 @@ class ViewController: UIViewController {
         let parms = [
             "id": id
         ]
-        APIRequest.shared.request(path: .channels, parms: parms, type: Channel.self) { (channel) in
+        API.shared.request(path: .channels, parms: parms, type: Channel.self) { (channel) in
             self.videoItems.forEach { (item) in
                 item.channel = channel
             }

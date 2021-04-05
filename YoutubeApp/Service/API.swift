@@ -9,10 +9,10 @@ import Foundation
 //
 import Alamofire
 
-class APIRequest {
+class API {
     
     // シングルトンにする(毎回インスタンス化せずに、APIRequest.shared.request で使えるようになる）
-    static var shared = APIRequest()
+    static let shared = API()
     // YoutubeAPI
     private let baseUrl = "https://www.googleapis.com/youtube/v3/"
     // APIKey
@@ -32,9 +32,8 @@ class APIRequest {
     }
 
     // MARK: - request
-    // <T: Decodable> Genericの書き方
+    // <T: Decodable> Genericsの書き方
     func request<T: Decodable>(path: PathType, parms: [String: Any], type: T.Type, completion: @escaping (T) -> Void) {
-        // Youtube API
         let path = path.rawValue
         let url = baseUrl + path + "?"
         var parms = parms
@@ -43,13 +42,16 @@ class APIRequest {
         let request = AF.request(url, method: .get, parameters: parms)
         request.responseJSON { (response) in
             print("response: ", response)
-            guard let data = response.data else { return }
-            let decode = JSONDecoder()
-            do {
-                let value = try decode.decode(T.self, from: data)
-                completion(value)
-            } catch {
-                print("変換に失敗しました: ", error)
+            guard let statusCode = response.response?.statusCode else { return }
+            if statusCode <= 300 {
+                do {
+                    guard let data = response.data else { return }
+                    let decoder = JSONDecoder()
+                    let value = try decoder.decode(T.self, from: data)
+                    completion(value)
+                } catch {
+                    print("変換に失敗しました: ", error)
+                }
             }
         }
 
