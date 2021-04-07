@@ -20,6 +20,7 @@ class ViewController: UIViewController {
     // コレクションビュー
     @IBOutlet weak var videoListCollectionView: UICollectionView!
     private let cellId = "cellId"
+    private let attentionCellId = "attentionCellId"
     private var videoItems = [Item]()
     // ０．５秒前のスクロール位置
     private var prevContentOffset: CGPoint = .init(x: 0, y: 0)
@@ -30,13 +31,18 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupViews()
+        fetchYoutubeSearchInfo()
+        
+    }
+    // MARK: ビューの初期設定
+    private func setupViews() {
         profileImageView.layer.cornerRadius = profileImageView.frame.size.height / 2
         
         videoListCollectionView.delegate = self
         videoListCollectionView.dataSource = self
         videoListCollectionView.register(UINib(nibName: "VideoListCell", bundle: nil), forCellWithReuseIdentifier: cellId)
-        
-        fetchYoutubeSearchInfo()
+        videoListCollectionView.register(AttentionCell.self, forCellWithReuseIdentifier: attentionCellId)
         
     }
     
@@ -63,8 +69,18 @@ class ViewController: UIViewController {
             self.videoListCollectionView.reloadData()
         }
     }
-    // MARK: スクロール中（画面に指が触れている状態）
+    
+}
+
+//
+// MARK: - スクロール処理
+//
+extension ViewController {
+    // MARK: スクロールした時に呼ばれる
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        headerAnimation(scrollView: scrollView)
+    }
+    private func headerAnimation(scrollView: UIScrollView) {
         // 0.5秒前のスクロール位置を退避
         DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
             self.prevContentOffset = scrollView.contentOffset
@@ -88,12 +104,9 @@ class ViewController: UIViewController {
             headerTopConstraint.constant += headerMoveHight
             headerView.alpha += alphaRatio * headerMoveHight
         }
-        
-//        print("headerHightConstraint.constant: ",headerHightConstraint.constant)
-//        print("headerTopConstraint.constant: ", headerTopConstraint.constant)
-//        print("")
+
     }
-    // MARK: ドラッグが終わって指が離れた
+    // MARK: スクロールがピタッと止まった時
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         // decelerate == true → ドラッグ開始
         // decelerate == false → ドラッグ終了
@@ -102,12 +115,11 @@ class ViewController: UIViewController {
             headerViewEndAnimation()
         }
     }
-    // MARK: 慣性スクロールしたものが、自動で停止した時
+    // MARK: 惰性でスクロールしたものが止まった時
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-//        print("scrollViewDidEndDecelerating")
-        headerViewEndAnimation()
+         headerViewEndAnimation()
     }
-    // ヘッダービューのアニメーション
+    // MARK: ヘッダービューのアニメーション
     private func headerViewEndAnimation() {
         if headerTopConstraint.constant < -headerHightConstraint.constant / 2 {
             // 半分以上 隠れたら隠す
@@ -125,7 +137,7 @@ class ViewController: UIViewController {
             }
         }
     }
-    
+
 }
 
 //
@@ -134,18 +146,39 @@ class ViewController: UIViewController {
 extension ViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
         let width = self.view.frame.width
-        return .init(width: width, height: width)
+        if indexPath.row == 2 {
+            return .init(width: width, height: 200)
+        } else {
+            return .init(width: width, height: width)
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return videoItems.count
+        return videoItems.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = videoListCollectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! VideoListCell
-        cell.videoItem = videoItems[indexPath.row]
-        return cell
+        if indexPath.row == 2 {
+            let cell = videoListCollectionView.dequeueReusableCell(withReuseIdentifier: attentionCellId, for: indexPath) as! AttentionCell
+            
+            cell.videoItems = self.videoItems
+            
+            return cell
+        } else {
+            let cell = videoListCollectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! VideoListCell
+            
+            if self.videoItems.count == 0 { return cell }
+            
+            if indexPath.row > 2 {
+                cell.videoItem = videoItems[indexPath.row - 1]
+            } else {
+                cell.videoItem = videoItems[indexPath.row]
+            }
+            return cell
+        }
     }
     
 }
