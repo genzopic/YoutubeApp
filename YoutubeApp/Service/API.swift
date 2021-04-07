@@ -41,7 +41,7 @@ class API {
         parms["part"] = "snippet"
         let request = AF.request(url, method: .get, parameters: parms)
         request.responseJSON { (response) in
-            print("response: ", response)
+//            print("response: ", response)
             guard let statusCode = response.response?.statusCode else { return }
             if statusCode <= 300 {
                 do {
@@ -52,6 +52,8 @@ class API {
                 } catch {
                     print("変換に失敗しました: ", error)
                 }
+            } else {
+                print("request err statusCode: ",statusCode)
             }
         }
 
