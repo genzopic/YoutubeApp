@@ -9,7 +9,7 @@ import UIKit
 //
 import Alamofire
 
-class ViewController: UIViewController {
+class VideoListController: UIViewController {
     
     // ヘッダービュー
     @IBOutlet weak var headerView: UIView!
@@ -75,7 +75,7 @@ class ViewController: UIViewController {
 //
 // MARK: - スクロール処理
 //
-extension ViewController {
+extension VideoListController {
     // MARK: スクロールした時に呼ばれる
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         headerAnimation(scrollView: scrollView)
@@ -143,7 +143,7 @@ extension ViewController {
 //
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
 //
-extension ViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension VideoListController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         

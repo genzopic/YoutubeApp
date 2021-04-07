@@ -19,8 +19,6 @@ class VideoListCell: UICollectionViewCell {
     var videoItem: Item? {
         didSet {
             if let url = URL(string: videoItem?.snippet.thumbnails.medium.url ?? "" ) {
-//                let data = try! Data(contentsOf: url)
-//                thumbnailImageView.image = UIImage(data: data)
                 Nuke.loadImage(with: url, into: thumbnailImageView)
             }
             if let channelUrl = URL(string: videoItem?.channel?.items[0].snippet.thumbnails.medium.url ?? "") {

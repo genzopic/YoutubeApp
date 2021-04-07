@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -9,16 +8,16 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Video List Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="YoutubeApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="VideoListController" customModule="YoutubeApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="0qP-hv-ctQ">
-                                <rect key="frame" x="0.0" y="104" width="414" height="758"/>
+                                <rect key="frame" x="0.0" y="60" width="600" height="540"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="yW8-Yt-yDU">
                                     <size key="itemSize" width="128" height="128"/>
@@ -38,7 +37,7 @@
                                 </cells>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9RW-7T-VNM">
-                                <rect key="frame" x="0.0" y="44" width="414" height="60"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="YoutubeLogoText" translatesAutoresizingMaskIntoConstraints="NO" id="VVM-16-mzC">
                                         <rect key="frame" x="10" y="5" width="120" height="50"/>
@@ -48,14 +47,14 @@
                                         </constraints>
                                     </imageView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IMG_6583" translatesAutoresizingMaskIntoConstraints="NO" id="cif-p2-gMf">
-                                        <rect key="frame" x="364" y="10" width="40" height="40"/>
+                                        <rect key="frame" x="550" y="10" width="40" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="cif-p2-gMf" secondAttribute="height" multiplier="1:1" id="YSi-Av-6WQ"/>
                                             <constraint firstAttribute="width" constant="40" id="xPe-or-XK5"/>
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="12t-ZW-uMf">
-                                        <rect key="frame" x="336" y="17.5" width="25" height="25"/>
+                                        <rect key="frame" x="522" y="17.5" width="25" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="12t-ZW-uMf" secondAttribute="height" multiplier="1:1" id="YGU-xe-S6u"/>
                                             <constraint firstAttribute="width" constant="25" id="b1v-vH-Qsl"/>
@@ -63,7 +62,7 @@
                                         <state key="normal" image="search"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0kI-hD-735">
-                                        <rect key="frame" x="308" y="17.5" width="25" height="25"/>
+                                        <rect key="frame" x="494" y="17.5" width="25" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="0kI-hD-735" secondAttribute="height" multiplier="1:1" id="1IA-QG-GSI"/>
                                             <constraint firstAttribute="width" constant="25" id="4J0-9T-ulR"/>
