@@ -14,6 +14,10 @@ class VideoViewController: UIViewController {
     var selectedItem: Item?
     
     @IBOutlet weak var videoImageView: UIImageView!
+    @IBOutlet weak var videoImageViewHeightConstrait: NSLayoutConstraint!
+    @IBOutlet weak var videoImageViewLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var videoImageViewTrailingConstraint: NSLayoutConstraint!
+    
     @IBOutlet weak var channelImageView: UIImageView!
     @IBOutlet weak var videoTitleLabel: UILabel!
     @IBOutlet weak var channelTitleLabel: UILabel!
@@ -61,6 +65,28 @@ class VideoViewController: UIViewController {
         if gesture.state == .changed {
             // x:横方向の動き、y:縦方向の動き
             imageView.transform = CGAffineTransform(translationX: 0, y: move.y)
+            // imageViewの左右のpadding設定
+            let movingConstant = move.y / 30
+            if movingConstant < 12 {
+                videoImageViewTrailingConstraint.constant = movingConstant
+                videoImageViewLeadingConstraint.constant = movingConstant
+            }
+            // imageViewの高さの動き（最大値：280 - 最小値：70 = 210）
+            let parantViewHeight = self.view.frame.height
+            let heightRatio = 210 / (parantViewHeight - (parantViewHeight / 6))
+            let moveHeight = move.y * heightRatio
+            videoImageViewHeightConstrait.constant = 280 - moveHeight
+            // imageViewの横幅の動き(最小値が150
+            let originalWidth = self.view.frame.width
+            let minimumImageViewTrailingConstant = originalWidth - (150 - 12)
+            let constant = originalWidth - move.y
+            if minimumImageViewTrailingConstant < (constant * -1) {
+                videoImageViewTrailingConstraint.constant = minimumImageViewTrailingConstant
+                return
+            }
+            if constant < -12 {
+                videoImageViewTrailingConstraint.constant = constant * -1
+            }
             
         } else if gesture.state == .ended {
             // アニメーション
@@ -71,16 +97,22 @@ class VideoViewController: UIViewController {
             // optionsではアニメーション中に使用するタイミング曲線の種類やアニメーションの逆再生などを指定
             // animationsクロージャの中でアニメーションしたいUIViewクラスのプロパティの値を変更
             UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.8, options: []) {
-                // .identity 元の位置
-                imageView.transform = .identity
-                // 確実に反映させる
-                self.view.layoutIfNeeded()
+                self.backToIdentitiyAllViews(imageView: imageView as! UIImageView)
             }
             
         }
         
     }
     
+    private func backToIdentitiyAllViews(imageView: UIImageView) {
+        // .identity 元の位置
+        imageView.transform = .identity
+        self.videoImageViewHeightConstrait.constant = 280
+        self.videoImageViewLeadingConstraint.constant = 0
+        self.videoImageViewTrailingConstraint.constant = 0
+        // 確実に反映させる
+        self.view.layoutIfNeeded()
+    }
 
 
 }

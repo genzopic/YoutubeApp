@@ -137,6 +137,9 @@
                         <outlet property="channelSubscriberCountLabel" destination="74l-os-d3d" id="Ymj-u5-RaE"/>
                         <outlet property="channelTitleLabel" destination="rYY-Sw-qkt" id="bJI-Pj-YuV"/>
                         <outlet property="videoImageView" destination="NY8-Dm-rpG" id="uTZ-UL-lL5"/>
+                        <outlet property="videoImageViewHeightConstrait" destination="Vzl-Yo-h2X" id="t4N-5s-RRM"/>
+                        <outlet property="videoImageViewLeadingConstraint" destination="zdf-nY-0vl" id="oYJ-oM-st3"/>
+                        <outlet property="videoImageViewTrailingConstraint" destination="50i-FA-hWa" id="nbL-Pk-3Id"/>
                         <outlet property="videoTitleLabel" destination="WZq-ic-Ep4" id="Tat-KD-05w"/>
                     </connections>
                 </viewController>
