@@ -38,7 +38,7 @@ class API {
         let url = baseUrl + path + "?"
         var parms = parms
         parms["key"] = apiKey
-        parms["part"] = "snippet"
+//        parms["part"] = "snippet"
         let request = AF.request(url, method: .get, parameters: parms)
         request.responseJSON { (response) in
 //            print("response: ", response)

@@ -11,17 +11,29 @@
         <!--Video View Controller-->
         <scene sceneID="fga-hJ-xxK">
             <objects>
-                <viewController storyboardIdentifier="VideoViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FOP-MB-orA" customClass="VideoViewController" customModule="YoutubeApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VideoViewController" modalPresentationStyle="overCurrentContext" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FOP-MB-orA" customClass="VideoViewController" customModule="YoutubeApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7eI-Py-ysV">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hV8-N5-OVe">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Cg-OS-mdZ">
+                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NY8-Dm-rpG">
                                 <rect key="frame" x="0.0" y="44" width="414" height="280"/>
                                 <color key="backgroundColor" systemColor="systemTealColor"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="280" id="Vzl-Yo-h2X"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="2Pb-hg-Q1z" appends="YES" id="YKD-6Q-6lW"/>
+                                </connections>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4et-7w-gMo">
                                 <rect key="frame" x="0.0" y="324" width="414" height="250"/>
@@ -43,7 +55,7 @@
                                             </label>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mEY-aq-N6R">
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="mEY-aq-N6R">
                                         <rect key="frame" x="10" y="54" width="394" height="45"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EZT-eI-QoM">
@@ -55,16 +67,16 @@
                                                 </constraints>
                                             </imageView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="RTd-cg-jvT">
-                                                <rect key="frame" x="45" y="0.0" width="249" height="45"/>
+                                                <rect key="frame" x="53" y="0.0" width="233" height="45"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="チャンネル名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rYY-Sw-qkt">
-                                                        <rect key="frame" x="0.0" y="0.0" width="249" height="22.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="233" height="22.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="チャンネル登録者数" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="74l-os-d3d">
-                                                        <rect key="frame" x="0.0" y="22.5" width="249" height="22.5"/>
+                                                        <rect key="frame" x="0.0" y="22.5" width="233" height="22.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -100,18 +112,40 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="mwm-On-TNt"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="4et-7w-gMo" firstAttribute="trailing" secondItem="mwm-On-TNt" secondAttribute="trailing" id="12P-gV-8Sv"/>
+                            <constraint firstItem="7Cg-OS-mdZ" firstAttribute="top" secondItem="mwm-On-TNt" secondAttribute="top" id="47l-Mi-rma"/>
                             <constraint firstItem="NY8-Dm-rpG" firstAttribute="top" secondItem="mwm-On-TNt" secondAttribute="top" id="4hJ-2o-x9r"/>
                             <constraint firstItem="mwm-On-TNt" firstAttribute="trailing" secondItem="NY8-Dm-rpG" secondAttribute="trailing" id="50i-FA-hWa"/>
                             <constraint firstItem="4et-7w-gMo" firstAttribute="leading" secondItem="mwm-On-TNt" secondAttribute="leading" id="5OB-uB-aNc"/>
+                            <constraint firstItem="7Cg-OS-mdZ" firstAttribute="trailing" secondItem="mwm-On-TNt" secondAttribute="trailing" id="5Zj-rI-CNQ"/>
+                            <constraint firstAttribute="bottom" secondItem="hV8-N5-OVe" secondAttribute="bottom" id="AaZ-Fi-fAu"/>
+                            <constraint firstItem="hV8-N5-OVe" firstAttribute="leading" secondItem="mwm-On-TNt" secondAttribute="leading" id="Bie-fN-sD1"/>
                             <constraint firstItem="4et-7w-gMo" firstAttribute="top" secondItem="NY8-Dm-rpG" secondAttribute="bottom" id="Doo-9d-kjb"/>
+                            <constraint firstAttribute="bottom" secondItem="7Cg-OS-mdZ" secondAttribute="bottom" id="Iv8-Rj-q24"/>
+                            <constraint firstItem="hV8-N5-OVe" firstAttribute="top" secondItem="7eI-Py-ysV" secondAttribute="top" id="O0Q-uT-OM5"/>
+                            <constraint firstItem="hV8-N5-OVe" firstAttribute="trailing" secondItem="mwm-On-TNt" secondAttribute="trailing" id="eUL-Tl-C85"/>
+                            <constraint firstItem="7Cg-OS-mdZ" firstAttribute="leading" secondItem="mwm-On-TNt" secondAttribute="leading" id="gFz-HG-gbB"/>
                             <constraint firstItem="NY8-Dm-rpG" firstAttribute="leading" secondItem="mwm-On-TNt" secondAttribute="leading" id="zdf-nY-0vl"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="backView" destination="7Cg-OS-mdZ" id="C5i-Yn-bSe"/>
+                        <outlet property="baseBackGroundView" destination="hV8-N5-OVe" id="Fl3-Ve-AMg"/>
+                        <outlet property="channelImageView" destination="EZT-eI-QoM" id="Keo-c7-jy9"/>
+                        <outlet property="channelSubscriberCountLabel" destination="74l-os-d3d" id="Ymj-u5-RaE"/>
+                        <outlet property="channelTitleLabel" destination="rYY-Sw-qkt" id="bJI-Pj-YuV"/>
+                        <outlet property="videoImageView" destination="NY8-Dm-rpG" id="uTZ-UL-lL5"/>
+                        <outlet property="videoTitleLabel" destination="WZq-ic-Ep4" id="Tat-KD-05w"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CHx-Sz-OZ1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="2Pb-hg-Q1z">
+                    <connections>
+                        <action selector="panVideoImageView:" destination="FOP-MB-orA" id="I5M-ZW-afe"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-230.43478260869566" y="84.375"/>
         </scene>

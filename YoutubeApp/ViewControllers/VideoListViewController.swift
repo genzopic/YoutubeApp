@@ -49,7 +49,8 @@ class VideoListViewController: UIViewController {
     // MARK: YoutubeAPIで検索
     private func fetchYoutubeSearchInfo() {
         let parms = [
-            "q": "camp"
+            "q": "camp",
+            "part": "snippet"
         ]
         API.shared.request(path: .search, parms: parms, type: Video.self) { (video) in
             self.videoItems = video.items
@@ -60,7 +61,8 @@ class VideoListViewController: UIViewController {
     // MARK: YoutubeAPIでチャンネルを検索
     private func fetchYoutubeChannelInfo(id: String) {
         let parms = [
-            "id": id
+            "id": id,
+            "part": "snippet,statistics"
         ]
         API.shared.request(path: .channels, parms: parms, type: Channel.self) { (channel) in
             self.videoItems.forEach { (item) in
@@ -180,10 +182,14 @@ extension VideoListViewController : UICollectionViewDelegate, UICollectionViewDa
     }
     // タップで遷移
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("didSelectItemAt: ", indexPath.row)
         let storyboard = UIStoryboard(name: "Video", bundle: nil)
         let videoViewController = storyboard.instantiateViewController(identifier: "VideoViewController") as! VideoViewController
-        videoViewController.modalPresentationStyle = .fullScreen
+//        videoViewController.modalPresentationStyle = .fullScreen
+        if indexPath.row > 2 {
+            videoViewController.selectedItem = videoItems[indexPath.row - 1]
+        } else {
+            videoViewController.selectedItem = videoItems[indexPath.row]
+        }
         present(videoViewController, animated: true, completion: nil)
         
     }

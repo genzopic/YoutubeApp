@@ -14,6 +14,7 @@ class Channel: Decodable {
 class ChannelItems: Decodable {
     let id: String
     let snippet: ChannelSnippet
+    let statistics: Statistics
 }
 
 class ChannelSnippet: Decodable {
@@ -31,4 +32,11 @@ class ChannelThumbnailDetail: Decodable {
     let url: String
     let width: Int
     let height: Int
+}
+
+class Statistics: Decodable {
+    let viewCount: String
+    let subscriberCount: String
+    let hiddenSubscriberCount: Bool
+    let videoCount: String
 }
