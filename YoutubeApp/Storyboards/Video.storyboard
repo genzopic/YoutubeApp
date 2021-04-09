@@ -20,6 +20,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DYb-dJ-b0j">
+                                <rect key="frame" x="0.0" y="44" width="414" height="280"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Cg-OS-mdZ">
                                 <rect key="frame" x="0.0" y="44" width="414" height="852"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -36,7 +40,7 @@
                                 </connections>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4et-7w-gMo">
-                                <rect key="frame" x="0.0" y="324" width="414" height="250"/>
+                                <rect key="frame" x="0.0" y="324" width="414" height="572"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Dom-oc-73M">
                                         <rect key="frame" x="10" y="10" width="394" height="34"/>
@@ -104,7 +108,6 @@
                                     <constraint firstItem="mEY-aq-N6R" firstAttribute="leading" secondItem="4et-7w-gMo" secondAttribute="leading" constant="10" id="JVk-Em-pqI"/>
                                     <constraint firstItem="Dom-oc-73M" firstAttribute="leading" secondItem="4et-7w-gMo" secondAttribute="leading" constant="10" id="OoR-DM-NSj"/>
                                     <constraint firstAttribute="trailing" secondItem="mEY-aq-N6R" secondAttribute="trailing" constant="10" id="Rrc-Dw-CKl"/>
-                                    <constraint firstAttribute="height" constant="250" id="adG-Wc-QWA"/>
                                     <constraint firstAttribute="trailing" secondItem="Dom-oc-73M" secondAttribute="trailing" constant="10" id="mhB-3Q-wni"/>
                                     <constraint firstItem="mEY-aq-N6R" firstAttribute="top" secondItem="Dom-oc-73M" secondAttribute="bottom" constant="10" id="ne1-Sp-t5k"/>
                                     <constraint firstItem="Dom-oc-73M" firstAttribute="top" secondItem="4et-7w-gMo" secondAttribute="top" constant="10" id="vxm-5n-acp"/>
@@ -114,28 +117,39 @@
                         <viewLayoutGuide key="safeArea" id="mwm-On-TNt"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="4et-7w-gMo" firstAttribute="trailing" secondItem="mwm-On-TNt" secondAttribute="trailing" id="12P-gV-8Sv"/>
-                            <constraint firstItem="7Cg-OS-mdZ" firstAttribute="top" secondItem="mwm-On-TNt" secondAttribute="top" id="47l-Mi-rma"/>
+                            <constraint firstItem="4et-7w-gMo" firstAttribute="trailing" secondItem="7eI-Py-ysV" secondAttribute="trailing" id="12P-gV-8Sv"/>
+                            <constraint firstItem="7Cg-OS-mdZ" firstAttribute="top" secondItem="NY8-Dm-rpG" secondAttribute="top" id="47l-Mi-rma"/>
                             <constraint firstItem="NY8-Dm-rpG" firstAttribute="top" secondItem="mwm-On-TNt" secondAttribute="top" id="4hJ-2o-x9r"/>
                             <constraint firstItem="mwm-On-TNt" firstAttribute="trailing" secondItem="NY8-Dm-rpG" secondAttribute="trailing" id="50i-FA-hWa"/>
-                            <constraint firstItem="4et-7w-gMo" firstAttribute="leading" secondItem="mwm-On-TNt" secondAttribute="leading" id="5OB-uB-aNc"/>
-                            <constraint firstItem="7Cg-OS-mdZ" firstAttribute="trailing" secondItem="mwm-On-TNt" secondAttribute="trailing" id="5Zj-rI-CNQ"/>
+                            <constraint firstItem="4et-7w-gMo" firstAttribute="leading" secondItem="7Cg-OS-mdZ" secondAttribute="leading" id="5OB-uB-aNc"/>
+                            <constraint firstItem="7Cg-OS-mdZ" firstAttribute="trailing" secondItem="NY8-Dm-rpG" secondAttribute="trailing" id="5Zj-rI-CNQ"/>
+                            <constraint firstItem="7Cg-OS-mdZ" firstAttribute="bottom" secondItem="4et-7w-gMo" secondAttribute="bottom" id="7vz-QC-a6i"/>
                             <constraint firstAttribute="bottom" secondItem="hV8-N5-OVe" secondAttribute="bottom" id="AaZ-Fi-fAu"/>
                             <constraint firstItem="hV8-N5-OVe" firstAttribute="leading" secondItem="mwm-On-TNt" secondAttribute="leading" id="Bie-fN-sD1"/>
                             <constraint firstItem="4et-7w-gMo" firstAttribute="top" secondItem="NY8-Dm-rpG" secondAttribute="bottom" id="Doo-9d-kjb"/>
                             <constraint firstAttribute="bottom" secondItem="7Cg-OS-mdZ" secondAttribute="bottom" id="Iv8-Rj-q24"/>
                             <constraint firstItem="hV8-N5-OVe" firstAttribute="top" secondItem="7eI-Py-ysV" secondAttribute="top" id="O0Q-uT-OM5"/>
+                            <constraint firstItem="NY8-Dm-rpG" firstAttribute="bottom" secondItem="DYb-dJ-b0j" secondAttribute="bottom" id="d4T-1q-Gy6"/>
                             <constraint firstItem="hV8-N5-OVe" firstAttribute="trailing" secondItem="mwm-On-TNt" secondAttribute="trailing" id="eUL-Tl-C85"/>
-                            <constraint firstItem="7Cg-OS-mdZ" firstAttribute="leading" secondItem="mwm-On-TNt" secondAttribute="leading" id="gFz-HG-gbB"/>
+                            <constraint firstItem="DYb-dJ-b0j" firstAttribute="top" secondItem="mwm-On-TNt" secondAttribute="top" id="f0n-Fl-cmv"/>
+                            <constraint firstItem="7Cg-OS-mdZ" firstAttribute="leading" secondItem="NY8-Dm-rpG" secondAttribute="leading" id="gFz-HG-gbB"/>
+                            <constraint firstItem="DYb-dJ-b0j" firstAttribute="leading" secondItem="7Cg-OS-mdZ" secondAttribute="leading" id="n3Q-i8-Y3z"/>
+                            <constraint firstItem="DYb-dJ-b0j" firstAttribute="trailing" secondItem="mwm-On-TNt" secondAttribute="trailing" id="oPy-ej-77P"/>
                             <constraint firstItem="NY8-Dm-rpG" firstAttribute="leading" secondItem="mwm-On-TNt" secondAttribute="leading" id="zdf-nY-0vl"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="backView" destination="7Cg-OS-mdZ" id="C5i-Yn-bSe"/>
+                        <outlet property="backViewBottomConstraint" destination="Iv8-Rj-q24" id="oPK-q3-F9F"/>
+                        <outlet property="backViewTopConstraint" destination="47l-Mi-rma" id="jKZ-vH-GeG"/>
+                        <outlet property="backViewTrailingConstraint" destination="5Zj-rI-CNQ" id="7t1-g3-XBn"/>
                         <outlet property="baseBackGroundView" destination="hV8-N5-OVe" id="Fl3-Ve-AMg"/>
                         <outlet property="channelImageView" destination="EZT-eI-QoM" id="Keo-c7-jy9"/>
                         <outlet property="channelSubscriberCountLabel" destination="74l-os-d3d" id="Ymj-u5-RaE"/>
                         <outlet property="channelTitleLabel" destination="rYY-Sw-qkt" id="bJI-Pj-YuV"/>
+                        <outlet property="describeView" destination="4et-7w-gMo" id="BXe-8h-slr"/>
+                        <outlet property="describeViewTopConstraint" destination="Doo-9d-kjb" id="FVC-Ma-0Qu"/>
+                        <outlet property="videoImageBackView" destination="DYb-dJ-b0j" id="eiB-0q-CVc"/>
                         <outlet property="videoImageView" destination="NY8-Dm-rpG" id="uTZ-UL-lL5"/>
                         <outlet property="videoImageViewHeightConstrait" destination="Vzl-Yo-h2X" id="t4N-5s-RRM"/>
                         <outlet property="videoImageViewLeadingConstraint" destination="zdf-nY-0vl" id="oYJ-oM-st3"/>

@@ -13,17 +13,35 @@ class VideoViewController: UIViewController {
     
     var selectedItem: Item?
     
+    private var imageViewCenterY: CGFloat?
+    var videoImageMaxY: CGFloat {
+        let ecludeValue = self.view.safeAreaInsets.bottom + (imageViewCenterY ?? 0)
+        return self.view.frame.maxY - ecludeValue
+    }
+    
+    // videoImageView
     @IBOutlet weak var videoImageView: UIImageView!
     @IBOutlet weak var videoImageViewHeightConstrait: NSLayoutConstraint!
     @IBOutlet weak var videoImageViewLeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var videoImageViewTrailingConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var videoImageBackView: UIView!
+    
+    
+    // backView
+    @IBOutlet weak var backView: UIView!
+    @IBOutlet weak var backViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var backViewTrailingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var backViewBottomConstraint: NSLayoutConstraint!
+    // describeView
+    @IBOutlet weak var describeView: UIView!
+    @IBOutlet weak var describeViewTopConstraint: NSLayoutConstraint!
+    //
     @IBOutlet weak var channelImageView: UIImageView!
     @IBOutlet weak var videoTitleLabel: UILabel!
     @IBOutlet weak var channelTitleLabel: UILabel!
     @IBOutlet weak var channelSubscriberCountLabel: UILabel!
     @IBOutlet weak var baseBackGroundView: UIView!
-    @IBOutlet weak var backView: UIView!
     
     
     override func viewDidLoad() {
@@ -40,6 +58,11 @@ class VideoViewController: UIViewController {
     }
     //
     private func setupViews() {
+        // videoImageViewを最前面に移動
+        self.view.bringSubviewToFront(videoImageView)
+        
+        imageViewCenterY = videoImageView.center.y
+        
         // ビデオイメージビュー
         videoImageView.contentMode = .scaleAspectFill
         videoImageView.isUserInteractionEnabled = true
@@ -56,6 +79,7 @@ class VideoViewController: UIViewController {
         channelTitleLabel.text = selectedItem?.channel?.items[0].snippet.title
         channelSubscriberCountLabel.text = "チャンネル登録者数 " + (selectedItem?.channel?.items[0].statistics.subscriberCount)!
 
+        print("videoImageMaxY: ",videoImageMaxY)
     }
     // パンジェスチャー
     @IBAction func panVideoImageView(_ gesture: UIPanGestureRecognizer) {
@@ -63,19 +87,44 @@ class VideoViewController: UIViewController {
         let move = gesture.translation(in: imageView)
         
         if gesture.state == .changed {
-            // x:横方向の動き、y:縦方向の動き
+            print("videoImageMaxY: ",videoImageMaxY)
+            print("move.y: ",move.y)
+            // 最大値までドラッグしたら止める
+            if videoImageMaxY <= move.y {
+                moveToBottom(imageView: imageView as! UIImageView)
+                return
+            }
+            
+            // imageViewをドラッグに合わせて下に移動
             imageView.transform = CGAffineTransform(translationX: 0, y: move.y)
+            videoImageBackView.transform = CGAffineTransform(translationX: 0, y: move.y)
+            
             // imageViewの左右のpadding設定
             let movingConstant = move.y / 30
             if movingConstant < 12 {
                 videoImageViewTrailingConstraint.constant = movingConstant
                 videoImageViewLeadingConstraint.constant = movingConstant
+
+                backViewTrailingConstraint.constant = movingConstant
             }
+            
             // imageViewの高さの動き（最大値：280 - 最小値：70 = 210）
             let parantViewHeight = self.view.frame.height
             let heightRatio = 210 / (parantViewHeight - (parantViewHeight / 6))
             let moveHeight = move.y * heightRatio
+            backViewTopConstraint.constant = move.y
             videoImageViewHeightConstrait.constant = 280 - moveHeight
+            describeViewTopConstraint.constant = move.y * 0.8
+            
+            let bottomMoveY = parantViewHeight - videoImageMaxY
+            let bottomMoveRatio = bottomMoveY / videoImageMaxY
+            let bottomMoveConstant = move.y * bottomMoveRatio
+            backViewBottomConstraint.constant = bottomMoveConstant
+            
+            // describeViewのAlpha値の設定
+            let alphaRatio = move.y / (parantViewHeight / 2)
+            describeView.alpha = 1 - alphaRatio
+            
             // imageViewの横幅の動き(最小値が150
             let originalWidth = self.view.frame.width
             let minimumImageViewTrailingConstant = originalWidth - (150 - 12)
@@ -103,7 +152,14 @@ class VideoViewController: UIViewController {
         }
         
     }
-    
+    //
+    private func moveToBottom(imageView: UIImageView) {
+        // CGAffineTransform translationX x,y方向に指定したtranslationの分移動
+        videoImageBackView.transform = CGAffineTransform(translationX: 0, y: videoImageMaxY)
+        imageView.transform = CGAffineTransform(translationX: 0, y: videoImageMaxY)
+        backView.transform = CGAffineTransform(translationX: 0, y: videoImageMaxY)
+    }
+    // 元の位置に戻す
     private func backToIdentitiyAllViews(imageView: UIImageView) {
         // .identity 元の位置
         imageView.transform = .identity
