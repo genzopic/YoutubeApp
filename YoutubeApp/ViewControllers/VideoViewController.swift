@@ -131,7 +131,6 @@ class VideoViewController: UIViewController {
             
             // imageViewの横幅の動き(最小値が150)
             let originalWidth = self.view.frame.width
-//            let minimumImageViewTrailingConstant = originalWidth - (150 - 12)
             let constant = originalWidth - move.y
             if minimumImageViewTrailingConstant < (constant * -1) {
                 videoImageViewTrailingConstraint.constant = minimumImageViewTrailingConstant
@@ -169,20 +168,34 @@ class VideoViewController: UIViewController {
         videoImageViewTrailingConstraint.constant = minimumImageViewTrailingConstant
         videoImageViewHeightConstrait.constant = 70   // 最小値の70
         
-        
         videoImageBackView.transform = CGAffineTransform(translationX: 0, y: videoImageMaxY)
-        backView.transform = CGAffineTransform(translationX: 0, y: videoImageMaxY)
-
+        describeView.alpha = 0
+        backView.alpha = 0
+        baseBackGroundView.alpha = 0
+        
         // 確実に反映させる
         self.view.layoutIfNeeded()
     }
     // 元の位置に戻す
     private func backToIdentitiyAllViews(imageView: UIImageView) {
-        // .identity 元の位置
-        imageView.transform = .identity
-        self.videoImageViewHeightConstrait.constant = 280
-        self.videoImageViewLeadingConstraint.constant = 0
-        self.videoImageViewTrailingConstraint.constant = 0
+        // imageViewの設定
+        imageView.transform = .identity   // .identity 元の位置
+        videoImageViewHeightConstrait.constant = 280
+        videoImageViewLeadingConstraint.constant = 0
+        videoImageViewTrailingConstraint.constant = 0
+        
+        // backViewの設定
+        backViewTrailingConstraint.constant = 0
+        backViewBottomConstraint.constant = 0
+        backViewTopConstraint.constant = 0
+        backView.alpha = 1
+        
+        // describeViewの設定
+        describeViewTopConstraint.constant = 0
+        describeView.alpha = 1
+        
+        baseBackGroundView.alpha = 1
+
         // 確実に反映させる
         self.view.layoutIfNeeded()
     }
