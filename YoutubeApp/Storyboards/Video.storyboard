@@ -122,7 +122,7 @@
                             <constraint firstItem="NY8-Dm-rpG" firstAttribute="top" secondItem="mwm-On-TNt" secondAttribute="top" id="4hJ-2o-x9r"/>
                             <constraint firstItem="mwm-On-TNt" firstAttribute="trailing" secondItem="NY8-Dm-rpG" secondAttribute="trailing" id="50i-FA-hWa"/>
                             <constraint firstItem="4et-7w-gMo" firstAttribute="leading" secondItem="7Cg-OS-mdZ" secondAttribute="leading" id="5OB-uB-aNc"/>
-                            <constraint firstItem="7Cg-OS-mdZ" firstAttribute="trailing" secondItem="NY8-Dm-rpG" secondAttribute="trailing" id="5Zj-rI-CNQ"/>
+                            <constraint firstItem="7Cg-OS-mdZ" firstAttribute="trailing" secondItem="hV8-N5-OVe" secondAttribute="trailing" id="5Zj-rI-CNQ"/>
                             <constraint firstItem="7Cg-OS-mdZ" firstAttribute="bottom" secondItem="4et-7w-gMo" secondAttribute="bottom" id="7vz-QC-a6i"/>
                             <constraint firstAttribute="bottom" secondItem="hV8-N5-OVe" secondAttribute="bottom" id="AaZ-Fi-fAu"/>
                             <constraint firstItem="hV8-N5-OVe" firstAttribute="leading" secondItem="mwm-On-TNt" secondAttribute="leading" id="Bie-fN-sD1"/>
