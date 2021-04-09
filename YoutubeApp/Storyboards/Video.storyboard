@@ -22,7 +22,7 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DYb-dJ-b0j">
                                 <rect key="frame" x="0.0" y="44" width="414" height="280"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" systemColor="systemRedColor"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Cg-OS-mdZ">
                                 <rect key="frame" x="0.0" y="44" width="414" height="852"/>
@@ -103,7 +103,7 @@
                                         </constraints>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" systemColor="systemYellowColor"/>
                                 <constraints>
                                     <constraint firstItem="mEY-aq-N6R" firstAttribute="leading" secondItem="4et-7w-gMo" secondAttribute="leading" constant="10" id="JVk-Em-pqI"/>
                                     <constraint firstItem="Dom-oc-73M" firstAttribute="leading" secondItem="4et-7w-gMo" secondAttribute="leading" constant="10" id="OoR-DM-NSj"/>
@@ -117,7 +117,7 @@
                         <viewLayoutGuide key="safeArea" id="mwm-On-TNt"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="4et-7w-gMo" firstAttribute="trailing" secondItem="7eI-Py-ysV" secondAttribute="trailing" id="12P-gV-8Sv"/>
+                            <constraint firstItem="4et-7w-gMo" firstAttribute="trailing" secondItem="hV8-N5-OVe" secondAttribute="trailing" id="12P-gV-8Sv"/>
                             <constraint firstItem="7Cg-OS-mdZ" firstAttribute="top" secondItem="NY8-Dm-rpG" secondAttribute="top" id="47l-Mi-rma"/>
                             <constraint firstItem="NY8-Dm-rpG" firstAttribute="top" secondItem="mwm-On-TNt" secondAttribute="top" id="4hJ-2o-x9r"/>
                             <constraint firstItem="mwm-On-TNt" firstAttribute="trailing" secondItem="NY8-Dm-rpG" secondAttribute="trailing" id="50i-FA-hWa"/>
@@ -134,7 +134,7 @@
                             <constraint firstItem="DYb-dJ-b0j" firstAttribute="top" secondItem="mwm-On-TNt" secondAttribute="top" id="f0n-Fl-cmv"/>
                             <constraint firstItem="7Cg-OS-mdZ" firstAttribute="leading" secondItem="NY8-Dm-rpG" secondAttribute="leading" id="gFz-HG-gbB"/>
                             <constraint firstItem="DYb-dJ-b0j" firstAttribute="leading" secondItem="7Cg-OS-mdZ" secondAttribute="leading" id="n3Q-i8-Y3z"/>
-                            <constraint firstItem="DYb-dJ-b0j" firstAttribute="trailing" secondItem="mwm-On-TNt" secondAttribute="trailing" id="oPy-ej-77P"/>
+                            <constraint firstItem="DYb-dJ-b0j" firstAttribute="trailing" secondItem="7Cg-OS-mdZ" secondAttribute="trailing" id="oPy-ej-77P"/>
                             <constraint firstItem="NY8-Dm-rpG" firstAttribute="leading" secondItem="mwm-On-TNt" secondAttribute="leading" id="zdf-nY-0vl"/>
                         </constraints>
                     </view>
@@ -176,6 +176,9 @@
         </systemColor>
         <systemColor name="systemTealColor">
             <color red="0.35294117647058826" green="0.78431372549019607" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

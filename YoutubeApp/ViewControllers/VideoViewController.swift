@@ -18,7 +18,10 @@ class VideoViewController: UIViewController {
         let ecludeValue = self.view.safeAreaInsets.bottom + (imageViewCenterY ?? 0)
         return self.view.frame.maxY - ecludeValue
     }
-    
+    var minimumImageViewTrailingConstant: CGFloat {
+        view.frame.width - (150 - 12)
+    }
+
     // videoImageView
     @IBOutlet weak var videoImageView: UIImageView!
     @IBOutlet weak var videoImageViewHeightConstrait: NSLayoutConstraint!
@@ -104,8 +107,8 @@ class VideoViewController: UIViewController {
             if movingConstant < 12 {
                 videoImageViewTrailingConstraint.constant = movingConstant
                 videoImageViewLeadingConstraint.constant = movingConstant
-
-                backViewTrailingConstraint.constant = movingConstant
+                
+                backViewTrailingConstraint.constant = -movingConstant
             }
             
             // imageViewの高さの動き（最大値：280 - 最小値：70 = 210）
@@ -126,9 +129,9 @@ class VideoViewController: UIViewController {
             describeView.alpha = 1 - alphaRatio
             baseBackGroundView.alpha = 1 - alphaRatio
             
-            // imageViewの横幅の動き(最小値が150
+            // imageViewの横幅の動き(最小値が150)
             let originalWidth = self.view.frame.width
-            let minimumImageViewTrailingConstant = originalWidth - (150 - 12)
+//            let minimumImageViewTrailingConstant = originalWidth - (150 - 12)
             let constant = originalWidth - move.y
             if minimumImageViewTrailingConstant < (constant * -1) {
                 videoImageViewTrailingConstraint.constant = minimumImageViewTrailingConstant
@@ -139,26 +142,39 @@ class VideoViewController: UIViewController {
             }
             
         } else if gesture.state == .ended {
-            // アニメーション
-            // durationはアニメーション時間
-            // delayは開始までの遅延時間
-            // usingSpringWithDampingは振幅の大きさを指定(1.0が最大で、この値が小さいほど振幅が大きくなる)
-            // initialSpringVelocityは、アニメーションの初速
-            // optionsではアニメーション中に使用するタイミング曲線の種類やアニメーションの逆再生などを指定
-            // animationsクロージャの中でアニメーションしたいUIViewクラスのプロパティの値を変更
-            UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.8, options: []) {
-                self.backToIdentitiyAllViews(imageView: imageView as! UIImageView)
+            if move.y < self.view.frame.height / 3 {
+                // 元の位置に戻る
+                // animate：アニメーション
+                //  durationはアニメーション時間、delayは開始までの遅延時間、usingSpringWithDampingは振幅の大きさを指定(1.0が最大で、この値が小さいほど振幅が大きくなる)
+                //  initialSpringVelocityは、アニメーションの初速、optionsではアニメーション中に使用するタイミング曲線の種類やアニメーションの逆再生などを指定
+                //  animationsクロージャの中でアニメーションしたいUIViewクラスのプロパティの値を変更
+                UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.8, options: []) {
+                    self.backToIdentitiyAllViews(imageView: imageView as! UIImageView)
+                }
+            } else {
+                
+                UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.8, options: []) {
+                    self.moveToBottom(imageView: imageView as! UIImageView)
+                }
             }
-            
-        }
+         }
         
     }
     //
     private func moveToBottom(imageView: UIImageView) {
         // CGAffineTransform translationX x,y方向に指定したtranslationの分移動
-        videoImageBackView.transform = CGAffineTransform(translationX: 0, y: videoImageMaxY)
+
+        // imageViewの設定（ビデオ）
         imageView.transform = CGAffineTransform(translationX: 0, y: videoImageMaxY)
+        videoImageViewTrailingConstraint.constant = minimumImageViewTrailingConstant
+        videoImageViewHeightConstrait.constant = 70   // 最小値の70
+        
+        
+        videoImageBackView.transform = CGAffineTransform(translationX: 0, y: videoImageMaxY)
         backView.transform = CGAffineTransform(translationX: 0, y: videoImageMaxY)
+
+        // 確実に反映させる
+        self.view.layoutIfNeeded()
     }
     // 元の位置に戻す
     private func backToIdentitiyAllViews(imageView: UIImageView) {
