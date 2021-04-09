@@ -121,9 +121,10 @@ class VideoViewController: UIViewController {
             let bottomMoveConstant = move.y * bottomMoveRatio
             backViewBottomConstraint.constant = bottomMoveConstant
             
-            // describeViewのAlpha値の設定
+            // Alpha値の設定
             let alphaRatio = move.y / (parantViewHeight / 2)
             describeView.alpha = 1 - alphaRatio
+            baseBackGroundView.alpha = 1 - alphaRatio
             
             // imageViewの横幅の動き(最小値が150
             let originalWidth = self.view.frame.width
