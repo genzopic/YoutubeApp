@@ -127,7 +127,7 @@ extension VideoListViewController {
     // MARK: YoutubeAPIで検索
     private func fetchYoutubeSearchInfo() {
         let parms = [
-            "q": "camp",
+            "q": "drikin",
             "part": "snippet"
         ]
         API.shared.request(path: .search, parms: parms, type: Video.self) { (video) in
