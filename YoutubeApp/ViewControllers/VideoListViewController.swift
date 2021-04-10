@@ -15,6 +15,8 @@ class VideoListViewController: UIViewController {
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var headerHightConstraint: NSLayoutConstraint!
     @IBOutlet weak var headerTopConstraint: NSLayoutConstraint!
+    //
+    @IBOutlet weak var searchButton: UIButton!
     // プロフィールイメージ
     @IBOutlet weak var profileImageView: UIImageView!
     // コレクションビュー（ビデオリスト一覧）
@@ -33,6 +35,14 @@ class VideoListViewController: UIViewController {
     @IBOutlet weak var bottomVideoImageView: UIImageView!
     @IBOutlet weak var bottomVideoImageWidth: NSLayoutConstraint!
     @IBOutlet weak var bottomVideoImageHeight: NSLayoutConstraint!
+    //
+    @IBOutlet weak var bottomSubscribeView: UIView!
+    @IBOutlet weak var bottomVideoTitleLabel: UILabel!
+    @IBOutlet weak var bottomVideoDescriptoin: UILabel!
+    
+    @IBOutlet weak var bottomCloseButton: UIButton!
+    
+    
     // ０．５秒前のスクロール位置
     private var prevContentOffset: CGPoint = .init(x: 0, y: 0)
     // ヘッダーの表示速度
@@ -52,11 +62,19 @@ class VideoListViewController: UIViewController {
 
     @objc private func showThumnailImage(notification: NSNotification) {
         
-        guard let userInfo = notification.userInfo as? [String:UIImage] else { return }
-        let image = userInfo["image"]
+        guard let userInfo = notification.userInfo as? [String:Any] else { return }
+        guard let image = userInfo["image"] as? UIImage else { return }
+        guard let videoImageMinY = userInfo["videoImageMinY"] as? CGFloat else { return }
         
+        let diffBottomConstant = videoImageMinY - bottomVideoView.frame.minY
+        
+        bottomVideoViewBottom.constant -= diffBottomConstant
         bottomVideoImageView.image = image
+        bottomVideoTitleLabel.text = selectedItem?.snippet.title
+        bottomVideoDescriptoin.text = selectedItem?.snippet.description
+        
         bottomVideoView.isHidden = false
+        self.bottomSubscribeView.isHidden = false
 
          print("showThumnailImage")
     }
@@ -74,6 +92,28 @@ class VideoListViewController: UIViewController {
         videoListCollectionView.register(AttentionCell.self, forCellWithReuseIdentifier: attentionCellId)
         
         bottomVideoView.isHidden = true
+        
+        bottomCloseButton.addTarget(self, action: #selector(tappedCloseButton), for: .touchUpInside)
+        searchButton.addTarget(self, action: #selector(tappedSearchButton), for: .touchUpInside)
+    }
+    
+    @objc private func tappedCloseButton() {
+        
+        UIView.animate(withDuration: 0.2) {
+            self.bottomVideoViewBottom.constant = -150
+            self.view.layoutIfNeeded()
+        } completion: { _ in
+            self.bottomVideoView.isHidden = true
+            self.selectedItem = nil
+        }
+        
+    }
+    
+    @objc private func tappedSearchButton() {
+        
+        let searchViewController = SearchViewController()
+        let nav = UINavigationController(rootViewController: searchViewController)
+        self.present(nav, animated: true, completion: nil)
         
     }
     
@@ -249,7 +289,7 @@ extension VideoListViewController {
             }
         }
     }
-
+    // ジェスチャーイベントの準備
     private func setupGestureRecognizer() {
         // 画面下のビデオイメージをパンした時の処理を追加
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panBottomVideoView))
@@ -258,7 +298,7 @@ extension VideoListViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapBottomVideoView))
         bottomVideoView.addGestureRecognizer(tapGesture)
     }
-    
+    // ビデオのパン
     @objc private func panBottomVideoView(gesture: UIPanGestureRecognizer) {
         let move = gesture.translation(in: view)
         guard let imageView = gesture.view else { return }
@@ -271,9 +311,10 @@ extension VideoListViewController {
             }
         }
     }
-
+    // ビデオのタップ
     @objc private func tapBottomVideoView() {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: []) {
+            self.bottomSubscribeView.isHidden = true
             self.bottomVideoViewExpandAnimation()
         } completion: { _ in
             let storyboard = UIStoryboard(name: "Video", bundle: nil)

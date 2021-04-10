@@ -19,7 +19,7 @@ class VideoViewController: UIViewController {
         return self.view.frame.maxY - ecludeValue
     }
     var minimumImageViewTrailingConstant: CGFloat {
-        view.frame.width - (150 - 12)
+        view.frame.width - (164 - 12)
     }
 
     // videoImageView
@@ -82,7 +82,6 @@ class VideoViewController: UIViewController {
         channelTitleLabel.text = selectedItem?.channel?.items[0].snippet.title
         channelSubscriberCountLabel.text = "チャンネル登録者数 " + (selectedItem?.channel?.items[0].statistics.subscriberCount)!
 
-        print("videoImageMaxY: ",videoImageMaxY)
     }
     // パンジェスチャー
     @IBAction func panVideoImageView(_ gesture: UIPanGestureRecognizer) {
@@ -133,7 +132,7 @@ class VideoViewController: UIViewController {
     // imageViewの高さの動き（最大値：280 - 最小値：70 = 210）
     private func adjustHeigtChange(move: CGPoint) {
         let parantViewHeight = self.view.frame.height
-        let heightRatio = 210 / (parantViewHeight - (parantViewHeight / 6))
+        let heightRatio = 210 / videoImageMaxY
         let moveHeight = move.y * heightRatio
         backViewTopConstraint.constant = move.y
         videoImageViewHeightConstrait.constant = 280 - moveHeight
@@ -189,7 +188,7 @@ class VideoViewController: UIViewController {
                     self.backView.isHidden = true
                     // NotificationCenterで通知（別なビューにイメージを渡す）
                     let image = self.videoImageView.image
-                    let userInfo:[String:UIImage?] = ["image": image]
+                    let userInfo:[String:Any] = ["image": image,"videoImageMinY": self.videoImageView.frame.minY]
                     NotificationCenter.default.post(name: .init("thumnailImage"), object: nil, userInfo: userInfo as [AnyHashable : Any])
                     
                 } completion: { _ in
@@ -208,12 +207,13 @@ class VideoViewController: UIViewController {
         imageView.transform = CGAffineTransform(translationX: 0, y: videoImageMaxY)
         videoImageViewTrailingConstraint.constant = minimumImageViewTrailingConstant
         videoImageViewHeightConstrait.constant = 70   // 最小値の70
+        videoImageViewLeadingConstraint.constant = 12
         
         videoImageBackView.transform = CGAffineTransform(translationX: 0, y: videoImageMaxY)
         describeView.alpha = 0
         backView.alpha = 0
         baseBackGroundView.alpha = 0
-        
+//        print("videoImageView.frame.width: ",videoImageView.frame.width)
         // 確実に反映させる
         self.view.layoutIfNeeded()
     }

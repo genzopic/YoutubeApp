@@ -33,6 +33,7 @@
 		7393F1EC261D3840007CD9BD /* AttentionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7393F1EA261D3840007CD9BD /* AttentionCollectionViewCell.xib */; };
 		7393F1FA261D63A5007CD9BD /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7393F1F9261D63A5007CD9BD /* VideoViewController.swift */; };
 		7393F1FE261D6841007CD9BD /* Video.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7393F1FD261D6841007CD9BD /* Video.storyboard */; };
+		73F72D392621F06F00CB7AE4 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F72D382621F06F00CB7AE4 /* SearchViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +65,7 @@
 		7393F1EA261D3840007CD9BD /* AttentionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttentionCollectionViewCell.xib; sourceTree = "<group>"; };
 		7393F1F9261D63A5007CD9BD /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		7393F1FD261D6841007CD9BD /* Video.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Video.storyboard; sourceTree = "<group>"; };
+		73F72D382621F06F00CB7AE4 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		749C08750EC413CEC569DA15 /* Pods-YoutubeApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YoutubeApp.debug.xcconfig"; path = "Target Support Files/Pods-YoutubeApp/Pods-YoutubeApp.debug.xcconfig"; sourceTree = "<group>"; };
 		767CB7E2A42497D868066AF5 /* Pods_YoutubeApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YoutubeApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -161,6 +163,7 @@
 				7337C1EA261B5C8800ADA488 /* BaseTabBarController.swift */,
 				731D5A34261A8FB3003F590D /* VideoListViewController.swift */,
 				7393F1F9261D63A5007CD9BD /* VideoViewController.swift */,
+				73F72D382621F06F00CB7AE4 /* SearchViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -344,6 +347,7 @@
 				731D5A65261B2C34003F590D /* Channel.swift in Sources */,
 				7393F1E3261C2BC6007CD9BD /* AttentionCell.swift in Sources */,
 				7337C1F1261B61F100ADA488 /* UIImage-Extension.swift in Sources */,
+				73F72D392621F06F00CB7AE4 /* SearchViewController.swift in Sources */,
 				731D5A47261AA4E0003F590D /* VideoListCell.swift in Sources */,
 				731D5A31261A8FB3003F590D /* AppDelegate.swift in Sources */,
 				731D5A33261A8FB3003F590D /* SceneDelegate.swift in Sources */,
