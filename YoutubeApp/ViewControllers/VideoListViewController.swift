@@ -22,11 +22,14 @@ class VideoListViewController: UIViewController {
     private let cellId = "cellId"
     private let attentionCellId = "attentionCellId"
     private var videoItems = [Item]()
+    //
+    @IBOutlet weak var bottomVideoView: UIView!
+    @IBOutlet weak var bottomVideoImageView: UIImageView!
+    
     // ０．５秒前のスクロール位置
     private var prevContentOffset: CGPoint = .init(x: 0, y: 0)
     // ヘッダーの表示速度
     private let headerMoveHight: CGFloat = 3
-    
     // MARK: -
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,15 +37,33 @@ class VideoListViewController: UIViewController {
         setupViews()
         fetchYoutubeSearchInfo()
         
+        //
+        NotificationCenter.default.addObserver(self, selector: #selector(showThumnailImage), name: .init("thumnailImage"), object: nil)
+        
     }
+    
+    @objc private func showThumnailImage(notification: NSNotification) {
+        
+        guard let userInfo = notification.userInfo as? [String:UIImage] else { return }
+        let image = userInfo["image"]
+        
+        bottomVideoImageView.image = image
+        bottomVideoView.isHidden = false
+
+         print("showThumnailImage")
+    }
+    
     // MARK: ビューの初期設定
     private func setupViews() {
+        
         profileImageView.layer.cornerRadius = profileImageView.frame.size.height / 2
         
         videoListCollectionView.delegate = self
         videoListCollectionView.dataSource = self
         videoListCollectionView.register(UINib(nibName: "VideoListCell", bundle: nil), forCellWithReuseIdentifier: cellId)
         videoListCollectionView.register(AttentionCell.self, forCellWithReuseIdentifier: attentionCellId)
+        
+        bottomVideoView.isHidden = true
         
     }
     
@@ -184,12 +205,17 @@ extension VideoListViewController : UICollectionViewDelegate, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "Video", bundle: nil)
         let videoViewController = storyboard.instantiateViewController(identifier: "VideoViewController") as! VideoViewController
-//        videoViewController.modalPresentationStyle = .fullScreen
-        if indexPath.row > 2 {
-            videoViewController.selectedItem = videoItems[indexPath.row - 1]
+
+        if videoItems.count == 0 {
+            videoViewController.selectedItem = nil
         } else {
-            videoViewController.selectedItem = videoItems[indexPath.row]
+            if indexPath.row > 2 {
+                videoViewController.selectedItem = videoItems[indexPath.row - 1]
+            } else {
+                videoViewController.selectedItem = videoItems[indexPath.row]
+            }
         }
+        bottomVideoView.isHidden = true
         present(videoViewController, animated: true, completion: nil)
         
     }
