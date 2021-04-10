@@ -74,18 +74,18 @@
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="12t-ZW-uMf">
-                                        <rect key="frame" x="329" y="17.5" width="25" height="25"/>
+                                        <rect key="frame" x="319" y="15" width="30" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="12t-ZW-uMf" secondAttribute="height" multiplier="1:1" id="YGU-xe-S6u"/>
-                                            <constraint firstAttribute="width" constant="25" id="b1v-vH-Qsl"/>
+                                            <constraint firstAttribute="width" constant="30" id="b1v-vH-Qsl"/>
                                         </constraints>
                                         <state key="normal" image="search"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0kI-hD-735">
-                                        <rect key="frame" x="294" y="17.5" width="25" height="25"/>
+                                        <rect key="frame" x="274" y="15" width="30" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="0kI-hD-735" secondAttribute="height" multiplier="1:1" id="1IA-QG-GSI"/>
-                                            <constraint firstAttribute="width" constant="25" id="4J0-9T-ulR"/>
+                                            <constraint firstAttribute="width" constant="30" id="4J0-9T-ulR"/>
                                         </constraints>
                                         <state key="normal" image="bell"/>
                                     </button>
@@ -95,9 +95,9 @@
                                     <constraint firstItem="0kI-hD-735" firstAttribute="width" secondItem="0kI-hD-735" secondAttribute="height" multiplier="1:1" id="7iv-YS-r3y"/>
                                     <constraint firstAttribute="height" constant="60" id="9vo-Bs-HW8"/>
                                     <constraint firstItem="VVM-16-mzC" firstAttribute="leading" secondItem="9RW-7T-VNM" secondAttribute="leading" constant="10" id="KWe-Rh-CeA"/>
-                                    <constraint firstItem="12t-ZW-uMf" firstAttribute="leading" secondItem="0kI-hD-735" secondAttribute="trailing" constant="10" id="O0v-RZ-4Nf"/>
+                                    <constraint firstItem="12t-ZW-uMf" firstAttribute="leading" secondItem="0kI-hD-735" secondAttribute="trailing" constant="15" id="O0v-RZ-4Nf"/>
                                     <constraint firstAttribute="trailing" secondItem="cif-p2-gMf" secondAttribute="trailing" constant="10" id="U2j-KI-OaS"/>
-                                    <constraint firstItem="cif-p2-gMf" firstAttribute="leading" secondItem="12t-ZW-uMf" secondAttribute="trailing" constant="10" id="ZTF-Mr-dgw"/>
+                                    <constraint firstItem="cif-p2-gMf" firstAttribute="leading" secondItem="12t-ZW-uMf" secondAttribute="trailing" constant="15" id="ZTF-Mr-dgw"/>
                                     <constraint firstItem="VVM-16-mzC" firstAttribute="centerY" secondItem="9RW-7T-VNM" secondAttribute="centerY" id="ch4-hf-t3D"/>
                                     <constraint firstItem="0kI-hD-735" firstAttribute="centerY" secondItem="9RW-7T-VNM" secondAttribute="centerY" id="d84-z3-DeL"/>
                                     <constraint firstItem="cif-p2-gMf" firstAttribute="centerY" secondItem="9RW-7T-VNM" secondAttribute="centerY" id="dYg-jz-g0i"/>
