@@ -17,15 +17,22 @@ class VideoListViewController: UIViewController {
     @IBOutlet weak var headerTopConstraint: NSLayoutConstraint!
     // プロフィールイメージ
     @IBOutlet weak var profileImageView: UIImageView!
-    // コレクションビュー
+    // コレクションビュー（ビデオリスト一覧）
     @IBOutlet weak var videoListCollectionView: UICollectionView!
     private let cellId = "cellId"
     private let attentionCellId = "attentionCellId"
     private var videoItems = [Item]()
-    //
+    private var selectedItem: Item?
+    // bottomVideoViewの制約（サムネイルとタイトルなどを含む枠）
     @IBOutlet weak var bottomVideoView: UIView!
+    @IBOutlet weak var bottomVideoViewTraing: NSLayoutConstraint!
+    @IBOutlet weak var bottomVideoViewLeading: NSLayoutConstraint!
+    @IBOutlet weak var bottomVideoViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var bottomVideoViewBottom: NSLayoutConstraint!
+    // bottomVideoImageの制約（サムネイル画像）
     @IBOutlet weak var bottomVideoImageView: UIImageView!
-    
+    @IBOutlet weak var bottomVideoImageWidth: NSLayoutConstraint!
+    @IBOutlet weak var bottomVideoImageHeight: NSLayoutConstraint!
     // ０．５秒前のスクロール位置
     private var prevContentOffset: CGPoint = .init(x: 0, y: 0)
     // ヘッダーの表示速度
@@ -36,12 +43,13 @@ class VideoListViewController: UIViewController {
         
         setupViews()
         fetchYoutubeSearchInfo()
+        setupGestureRecognizer()
         
-        //
+        // 通知を受け取り画面下にサムネイル画像を表示する
         NotificationCenter.default.addObserver(self, selector: #selector(showThumnailImage), name: .init("thumnailImage"), object: nil)
         
     }
-    
+
     @objc private func showThumnailImage(notification: NSNotification) {
         
         guard let userInfo = notification.userInfo as? [String:UIImage] else { return }
@@ -55,6 +63,8 @@ class VideoListViewController: UIViewController {
     
     // MARK: ビューの初期設定
     private func setupViews() {
+        // 最前面にbottomVideoViewを表示
+        view.bringSubviewToFront(bottomVideoView)
         
         profileImageView.layer.cornerRadius = profileImageView.frame.size.height / 2
         
@@ -66,6 +76,13 @@ class VideoListViewController: UIViewController {
         bottomVideoView.isHidden = true
         
     }
+    
+}
+
+//
+// MARK: API通信
+//
+extension VideoListViewController {
     
     // MARK: YoutubeAPIで検索
     private func fetchYoutubeSearchInfo() {
@@ -92,7 +109,7 @@ class VideoListViewController: UIViewController {
             self.videoListCollectionView.reloadData()
         }
     }
-    
+
 }
 
 //
@@ -142,24 +159,6 @@ extension VideoListViewController {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
          headerViewEndAnimation()
     }
-    // MARK: ヘッダービューのアニメーション
-    private func headerViewEndAnimation() {
-        if headerTopConstraint.constant < -headerHightConstraint.constant / 2 {
-            // 半分以上 隠れたら隠す
-            UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.8, options: []) {
-                self.headerTopConstraint.constant = -self.headerHightConstraint.constant
-                self.headerView.alpha = 0
-                self.view.layoutIfNeeded()
-            }
-        } else {
-            // 半分以上 表示されたら隠す
-            UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.8, options: []) {
-                self.headerTopConstraint.constant = 0
-                self.headerView.alpha = 1
-                self.view.layoutIfNeeded()
-            }
-        }
-    }
 
 }
 
@@ -208,11 +207,16 @@ extension VideoListViewController : UICollectionViewDelegate, UICollectionViewDa
 
         if videoItems.count == 0 {
             videoViewController.selectedItem = nil
+            self.selectedItem = nil
         } else {
             if indexPath.row > 2 {
-                videoViewController.selectedItem = videoItems[indexPath.row - 1]
+                let item = videoItems[indexPath.row - 1]
+                videoViewController.selectedItem = item
+                self.selectedItem = item
             } else {
-                videoViewController.selectedItem = videoItems[indexPath.row]
+                let item = videoItems[indexPath.row]
+                videoViewController.selectedItem = item
+                self.selectedItem = item
             }
         }
         bottomVideoView.isHidden = true
@@ -221,3 +225,101 @@ extension VideoListViewController : UICollectionViewDelegate, UICollectionViewDa
     }
     
 }
+
+//
+// MARK: - アニメーション
+//
+extension VideoListViewController {
+    
+    // ヘッダービューのアニメーション
+    private func headerViewEndAnimation() {
+        if headerTopConstraint.constant < -headerHightConstraint.constant / 2 {
+            // 半分以上 隠れたら隠す
+            UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.8, options: []) {
+                self.headerTopConstraint.constant = -self.headerHightConstraint.constant
+                self.headerView.alpha = 0
+                self.view.layoutIfNeeded()
+            }
+        } else {
+            // 半分以上 表示されたら隠す
+            UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.8, options: []) {
+                self.headerTopConstraint.constant = 0
+                self.headerView.alpha = 1
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
+
+    private func setupGestureRecognizer() {
+        // 画面下のビデオイメージをパンした時の処理を追加
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panBottomVideoView))
+        bottomVideoView.addGestureRecognizer(panGesture)
+        // 画面下のビデオイメージをタップの処理を追加
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapBottomVideoView))
+        bottomVideoView.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func panBottomVideoView(gesture: UIPanGestureRecognizer) {
+        let move = gesture.translation(in: view)
+        guard let imageView = gesture.view else { return }
+        if gesture.state == .changed {
+            imageView.transform = CGAffineTransform(translationX: move.x, y: move.y)
+        } else if gesture.state == .ended {
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.8, options: []) {
+                imageView.transform = .identity
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
+
+    @objc private func tapBottomVideoView() {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: []) {
+            self.bottomVideoViewExpandAnimation()
+        } completion: { _ in
+            let storyboard = UIStoryboard(name: "Video", bundle: nil)
+            let videoViewController = storyboard.instantiateViewController(identifier: "VideoViewController") as! VideoViewController
+            videoViewController.selectedItem = self.selectedItem
+            self.present(videoViewController, animated: false, completion: nil)
+            self.bottomVideoViewBackToIdentity()
+        }
+
+    }
+    
+    private func bottomVideoViewExpandAnimation() {
+        
+        let topSafeArea = self.view.safeAreaInsets.top
+        let bottomSafeArea = self.view.safeAreaInsets.bottom
+        // bottomVideoView
+        bottomVideoViewLeading.constant = 0
+        bottomVideoViewTraing.constant = 0
+        bottomVideoViewBottom.constant = -bottomSafeArea
+        bottomVideoViewHeight.constant = self.view.frame.height - topSafeArea
+        // bottomVideoImageView
+        bottomVideoImageWidth.constant = self.view.frame.width
+        bottomVideoImageHeight.constant = 280
+        //
+        tabBarController?.tabBar.isHidden = true
+        // アニメーションを実行するためにこれが必須
+        self.view.layoutIfNeeded()
+
+    }
+    
+    private func bottomVideoViewBackToIdentity() {
+
+        // bottomVideoView
+        bottomVideoViewLeading.constant = 12
+        bottomVideoViewTraing.constant = 12
+        bottomVideoViewBottom.constant = 19
+        bottomVideoViewHeight.constant = 70
+        // bottomVideoImageView
+        bottomVideoImageWidth.constant = 126
+        bottomVideoImageHeight.constant = 70
+        //
+        bottomVideoView.isHidden = true
+        tabBarController?.tabBar.isHidden = false
+
+    }
+
+    
+}
+    

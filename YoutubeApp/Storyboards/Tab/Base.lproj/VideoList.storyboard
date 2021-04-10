@@ -44,13 +44,13 @@
                                         <rect key="frame" x="0.0" y="0.0" width="126" height="70"/>
                                         <color key="backgroundColor" systemColor="systemBlueColor"/>
                                         <constraints>
+                                            <constraint firstAttribute="height" constant="70" id="RRL-gB-im8"/>
                                             <constraint firstAttribute="width" constant="126" id="rWj-vG-Umr"/>
                                         </constraints>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="bM4-sO-l7h" secondAttribute="bottom" id="A4M-bc-Wn8"/>
                                     <constraint firstAttribute="height" constant="70" id="G4i-Jx-3rn"/>
                                     <constraint firstItem="bM4-sO-l7h" firstAttribute="leading" secondItem="5eY-wg-5xn" secondAttribute="leading" id="J3Q-mj-rR4"/>
                                     <constraint firstItem="bM4-sO-l7h" firstAttribute="top" secondItem="5eY-wg-5xn" secondAttribute="top" id="ges-MN-dE7"/>
@@ -74,18 +74,18 @@
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="12t-ZW-uMf">
-                                        <rect key="frame" x="319" y="15" width="30" height="30"/>
+                                        <rect key="frame" x="324" y="17.5" width="25" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="12t-ZW-uMf" secondAttribute="height" multiplier="1:1" id="YGU-xe-S6u"/>
-                                            <constraint firstAttribute="width" constant="30" id="b1v-vH-Qsl"/>
+                                            <constraint firstAttribute="width" constant="25" id="b1v-vH-Qsl"/>
                                         </constraints>
                                         <state key="normal" image="search"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0kI-hD-735">
-                                        <rect key="frame" x="274" y="15" width="30" height="30"/>
+                                        <rect key="frame" x="284" y="17.5" width="25" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="0kI-hD-735" secondAttribute="height" multiplier="1:1" id="1IA-QG-GSI"/>
-                                            <constraint firstAttribute="width" constant="30" id="4J0-9T-ulR"/>
+                                            <constraint firstAttribute="width" constant="25" id="4J0-9T-ulR"/>
                                         </constraints>
                                         <state key="normal" image="bell"/>
                                     </button>
@@ -122,8 +122,14 @@
                     </view>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="bottomVideoImageHeight" destination="RRL-gB-im8" id="Snh-e3-efB"/>
                         <outlet property="bottomVideoImageView" destination="bM4-sO-l7h" id="GC5-o7-AsS"/>
+                        <outlet property="bottomVideoImageWidth" destination="rWj-vG-Umr" id="zDY-i1-bad"/>
                         <outlet property="bottomVideoView" destination="5eY-wg-5xn" id="f6c-gc-Msk"/>
+                        <outlet property="bottomVideoViewBottom" destination="eMA-Qt-SF2" id="vgs-VA-oqf"/>
+                        <outlet property="bottomVideoViewHeight" destination="G4i-Jx-3rn" id="j39-8H-wZv"/>
+                        <outlet property="bottomVideoViewLeading" destination="w4o-uL-aan" id="Otg-1Z-64c"/>
+                        <outlet property="bottomVideoViewTraing" destination="GRS-c2-sfb" id="SDF-zl-Qzd"/>
                         <outlet property="headerHightConstraint" destination="9vo-Bs-HW8" id="yY0-b8-yKs"/>
                         <outlet property="headerTopConstraint" destination="tHb-Yi-QB8" id="1gM-BD-VQl"/>
                         <outlet property="headerView" destination="9RW-7T-VNM" id="FDj-gD-VUr"/>
