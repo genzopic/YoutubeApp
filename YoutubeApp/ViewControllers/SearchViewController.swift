@@ -44,37 +44,52 @@ class SearchViewController: UIViewController {
 
 }
 
+// MARK: - UICollectionViewDelegate
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    // セルを選択した時
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // モーダル表示元のcontroller
+        let prevController = self.presentingViewController as! BaseTabBarController
+        // tabbarの１番目のタブのcontroller
+        let videoList = prevController.viewControllers?[0] as! VideoListViewController
+        videoList.selectedItem = video?.items[indexPath.row]
+        
+        dismiss(animated: true) {
+            NotificationCenter.default.post(name: NSNotification.Name("searchedItem"), object: nil)
+        }
+        
+    }
+    // セルのサイズ調整（UICollectionViewDelegateFlowLayout）
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = self.view.frame.width
         return .init(width: width, height: width)
     }
-    
+    // セルの数
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return video?.items.count ?? 0
     }
-    
+    // セルの構築
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: videoCellId, for: indexPath) as! VideoListCell
         cell.videoItem = video?.items[indexPath.row]
         return cell
     }
     
-    
 }
 
+// MARK: - UISearchBarDelegate
 extension SearchViewController: UISearchBarDelegate {
-    
+    // 検索欄の入力開始
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.showsCancelButton = true
     }
-    
+    // キャンセルボタンをタップ
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.showsCancelButton = false
         searchBar.resignFirstResponder()
     }
-    
+    // 検索ボタンをタップ
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.showsCancelButton = false
         searchBar.resignFirstResponder()

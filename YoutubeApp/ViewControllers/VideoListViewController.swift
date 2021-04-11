@@ -24,7 +24,7 @@ class VideoListViewController: UIViewController {
     private let cellId = "cellId"
     private let attentionCellId = "attentionCellId"
     private var videoItems = [Item]()
-    private var selectedItem: Item?
+    var selectedItem: Item?
     // bottomVideoViewの制約（サムネイルとタイトルなどを含む枠）
     @IBOutlet weak var bottomVideoView: UIView!
     @IBOutlet weak var bottomVideoViewTraing: NSLayoutConstraint!
@@ -52,14 +52,31 @@ class VideoListViewController: UIViewController {
         super.viewDidLoad()
         
         setupViews()
-        fetchYoutubeSearchInfo()
+//        fetchYoutubeSearchInfo()
         setupGestureRecognizer()
+        setupNotifications()
         
+    }
+    
+    private func setupNotifications() {
         // 通知を受け取り画面下にサムネイル画像を表示する
         NotificationCenter.default.addObserver(self, selector: #selector(showThumnailImage), name: .init("thumnailImage"), object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(showSearchedItem), name: .init("searchedItem"), object: nil)
     }
+    
+    // MARK: 検索画面から遷移してきた時の処理
+    @objc private func showSearchedItem() {
+        let storyboard = UIStoryboard(name: "Video", bundle: nil)
+        let videoViewController = storyboard.instantiateViewController(identifier: "VideoViewController") as! VideoViewController
 
+        videoViewController.selectedItem = self.selectedItem
+        bottomVideoView.isHidden = true
+        present(videoViewController, animated: true, completion: nil)
+
+    }
+    
+    // VideoView（サムネイル画面）から遷移してきた時の処理
     @objc private func showThumnailImage(notification: NSNotification) {
         
         guard let userInfo = notification.userInfo as? [String:Any] else { return }
@@ -76,7 +93,6 @@ class VideoListViewController: UIViewController {
         bottomVideoView.isHidden = false
         self.bottomSubscribeView.isHidden = false
 
-         print("showThumnailImage")
     }
     
     // MARK: ビューの初期設定
