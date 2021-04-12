@@ -52,7 +52,7 @@ class VideoListViewController: UIViewController {
         super.viewDidLoad()
         
         setupViews()
-//        fetchYoutubeSearchInfo()
+        fetchYoutubeSearchInfo()
         setupGestureRecognizer()
         setupNotifications()
         
@@ -82,9 +82,10 @@ class VideoListViewController: UIViewController {
         guard let userInfo = notification.userInfo as? [String:Any] else { return }
         guard let image = userInfo["image"] as? UIImage else { return }
         guard let videoImageMinY = userInfo["videoImageMinY"] as? CGFloat else { return }
+        guard let videoImageViewWidth = userInfo["videoImageViewWidth"] as? CGFloat else { return }
         
         let diffBottomConstant = videoImageMinY - bottomVideoView.frame.minY
-        
+        bottomVideoImageWidth.constant = videoImageViewWidth
         bottomVideoViewBottom.constant -= diffBottomConstant
         bottomVideoImageView.image = image
         bottomVideoTitleLabel.text = selectedItem?.snippet.title

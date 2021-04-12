@@ -188,7 +188,9 @@ class VideoViewController: UIViewController {
                     self.backView.isHidden = true
                     // NotificationCenterで通知（別なビューにイメージを渡す）
                     let image = self.videoImageView.image
-                    let userInfo:[String:Any] = ["image": image,"videoImageMinY": self.videoImageView.frame.minY]
+                    let userInfo:[String:Any] = ["image": image,
+                                                 "videoImageMinY": self.videoImageView.frame.minY,
+                                                 "videoImageViewWidth": self.videoImageView.frame.width   ]
                     NotificationCenter.default.post(name: .init("thumnailImage"), object: nil, userInfo: userInfo as [AnyHashable : Any])
                     
                 } completion: { _ in
