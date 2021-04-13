@@ -90,6 +90,14 @@
                                             <constraint firstAttribute="trailing" secondItem="lvc-mB-5d0" secondAttribute="trailing" id="skx-hR-bi8"/>
                                         </constraints>
                                     </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZgC-50-0sk" customClass="WKYTPlayerView">
+                                        <rect key="frame" x="0.0" y="0.0" width="140" height="70"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="140" id="Qz7-gv-mlq"/>
+                                            <constraint firstAttribute="height" constant="70" id="p6H-eX-JHe"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
@@ -99,6 +107,9 @@
                                     <constraint firstItem="Ypa-QE-ilh" firstAttribute="top" secondItem="5eY-wg-5xn" secondAttribute="top" id="Jfj-EE-ZkS"/>
                                     <constraint firstAttribute="trailing" secondItem="Ypa-QE-ilh" secondAttribute="trailing" id="ZEc-GX-viJ"/>
                                     <constraint firstItem="bM4-sO-l7h" firstAttribute="top" secondItem="5eY-wg-5xn" secondAttribute="top" id="ges-MN-dE7"/>
+                                    <constraint firstItem="ZgC-50-0sk" firstAttribute="leading" secondItem="5eY-wg-5xn" secondAttribute="leading" id="hxm-sG-A4P"/>
+                                    <constraint firstItem="Ypa-QE-ilh" firstAttribute="leading" secondItem="ZgC-50-0sk" secondAttribute="trailing" id="l4E-26-DEK"/>
+                                    <constraint firstItem="ZgC-50-0sk" firstAttribute="top" secondItem="5eY-wg-5xn" secondAttribute="top" id="opV-Aa-NHQ"/>
                                     <constraint firstItem="Ypa-QE-ilh" firstAttribute="leading" secondItem="bM4-sO-l7h" secondAttribute="trailing" id="pNX-2p-DtR"/>
                                 </constraints>
                             </view>
@@ -174,6 +185,9 @@
                         <outlet property="bottomVideoImageHeight" destination="RRL-gB-im8" id="Snh-e3-efB"/>
                         <outlet property="bottomVideoImageView" destination="bM4-sO-l7h" id="GC5-o7-AsS"/>
                         <outlet property="bottomVideoImageWidth" destination="rWj-vG-Umr" id="zDY-i1-bad"/>
+                        <outlet property="bottomVideoPlayerHeight" destination="p6H-eX-JHe" id="Hrd-OY-Mm0"/>
+                        <outlet property="bottomVideoPlayerView" destination="ZgC-50-0sk" id="XDa-gD-dD9"/>
+                        <outlet property="bottomVideoPlayerWidth" destination="Qz7-gv-mlq" id="dpq-wu-4JT"/>
                         <outlet property="bottomVideoTitleLabel" destination="8Qh-v2-a95" id="EGb-wV-ZSR"/>
                         <outlet property="bottomVideoView" destination="5eY-wg-5xn" id="f6c-gc-Msk"/>
                         <outlet property="bottomVideoViewBottom" destination="eMA-Qt-SF2" id="vgs-VA-oqf"/>

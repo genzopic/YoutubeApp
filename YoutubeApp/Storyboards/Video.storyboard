@@ -28,17 +28,6 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="852"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NY8-Dm-rpG">
-                                <rect key="frame" x="0.0" y="44" width="414" height="280"/>
-                                <color key="backgroundColor" systemColor="systemTealColor"/>
-                                <gestureRecognizers/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="280" id="Vzl-Yo-h2X"/>
-                                </constraints>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="2Pb-hg-Q1z" appends="YES" id="YKD-6Q-6lW"/>
-                                </connections>
-                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4et-7w-gMo">
                                 <rect key="frame" x="0.0" y="324" width="414" height="572"/>
                                 <subviews>
@@ -113,29 +102,41 @@
                                     <constraint firstItem="Dom-oc-73M" firstAttribute="top" secondItem="4et-7w-gMo" secondAttribute="top" constant="10" id="vxm-5n-acp"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vMA-AX-8IV" customClass="WKYTPlayerView">
+                                <rect key="frame" x="0.0" y="44" width="414" height="280"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="280" id="73b-2T-i6x"/>
+                                </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="uiu-cx-2gm" appends="YES" id="Cgc-qX-OpM"/>
+                                </connections>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="mwm-On-TNt"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="4et-7w-gMo" firstAttribute="trailing" secondItem="hV8-N5-OVe" secondAttribute="trailing" id="12P-gV-8Sv"/>
-                            <constraint firstItem="7Cg-OS-mdZ" firstAttribute="top" secondItem="NY8-Dm-rpG" secondAttribute="top" id="47l-Mi-rma"/>
-                            <constraint firstItem="NY8-Dm-rpG" firstAttribute="top" secondItem="mwm-On-TNt" secondAttribute="top" id="4hJ-2o-x9r"/>
-                            <constraint firstItem="mwm-On-TNt" firstAttribute="trailing" secondItem="NY8-Dm-rpG" secondAttribute="trailing" id="50i-FA-hWa"/>
+                            <constraint firstItem="vMA-AX-8IV" firstAttribute="top" secondItem="mwm-On-TNt" secondAttribute="top" id="1CG-6g-iwo"/>
+                            <constraint firstItem="7Cg-OS-mdZ" firstAttribute="top" secondItem="vMA-AX-8IV" secondAttribute="top" id="47l-Mi-rma"/>
+                            <constraint firstItem="DYb-dJ-b0j" firstAttribute="bottom" secondItem="vMA-AX-8IV" secondAttribute="bottom" id="4kU-9J-fXx"/>
                             <constraint firstItem="4et-7w-gMo" firstAttribute="leading" secondItem="7Cg-OS-mdZ" secondAttribute="leading" id="5OB-uB-aNc"/>
                             <constraint firstItem="7Cg-OS-mdZ" firstAttribute="trailing" secondItem="hV8-N5-OVe" secondAttribute="trailing" id="5Zj-rI-CNQ"/>
                             <constraint firstItem="7Cg-OS-mdZ" firstAttribute="bottom" secondItem="4et-7w-gMo" secondAttribute="bottom" id="7vz-QC-a6i"/>
                             <constraint firstAttribute="bottom" secondItem="hV8-N5-OVe" secondAttribute="bottom" id="AaZ-Fi-fAu"/>
                             <constraint firstItem="hV8-N5-OVe" firstAttribute="leading" secondItem="mwm-On-TNt" secondAttribute="leading" id="Bie-fN-sD1"/>
-                            <constraint firstItem="4et-7w-gMo" firstAttribute="top" secondItem="NY8-Dm-rpG" secondAttribute="bottom" id="Doo-9d-kjb"/>
+                            <constraint firstItem="4et-7w-gMo" firstAttribute="top" secondItem="vMA-AX-8IV" secondAttribute="bottom" id="Doo-9d-kjb"/>
+                            <constraint firstItem="vMA-AX-8IV" firstAttribute="leading" secondItem="mwm-On-TNt" secondAttribute="leading" id="FgN-9z-rw7"/>
                             <constraint firstAttribute="bottom" secondItem="7Cg-OS-mdZ" secondAttribute="bottom" id="Iv8-Rj-q24"/>
                             <constraint firstItem="hV8-N5-OVe" firstAttribute="top" secondItem="7eI-Py-ysV" secondAttribute="top" id="O0Q-uT-OM5"/>
-                            <constraint firstItem="NY8-Dm-rpG" firstAttribute="bottom" secondItem="DYb-dJ-b0j" secondAttribute="bottom" id="d4T-1q-Gy6"/>
+                            <constraint firstItem="vMA-AX-8IV" firstAttribute="bottom" secondItem="DYb-dJ-b0j" secondAttribute="bottom" id="d4T-1q-Gy6"/>
                             <constraint firstItem="hV8-N5-OVe" firstAttribute="trailing" secondItem="mwm-On-TNt" secondAttribute="trailing" id="eUL-Tl-C85"/>
                             <constraint firstItem="DYb-dJ-b0j" firstAttribute="top" secondItem="mwm-On-TNt" secondAttribute="top" id="f0n-Fl-cmv"/>
-                            <constraint firstItem="7Cg-OS-mdZ" firstAttribute="leading" secondItem="NY8-Dm-rpG" secondAttribute="leading" id="gFz-HG-gbB"/>
+                            <constraint firstItem="vMA-AX-8IV" firstAttribute="trailing" secondItem="mwm-On-TNt" secondAttribute="trailing" id="fmk-4R-iGx"/>
+                            <constraint firstItem="7Cg-OS-mdZ" firstAttribute="leading" secondItem="vMA-AX-8IV" secondAttribute="leading" id="gFz-HG-gbB"/>
                             <constraint firstItem="DYb-dJ-b0j" firstAttribute="leading" secondItem="7Cg-OS-mdZ" secondAttribute="leading" id="n3Q-i8-Y3z"/>
                             <constraint firstItem="DYb-dJ-b0j" firstAttribute="trailing" secondItem="7Cg-OS-mdZ" secondAttribute="trailing" id="oPy-ej-77P"/>
-                            <constraint firstItem="NY8-Dm-rpG" firstAttribute="leading" secondItem="mwm-On-TNt" secondAttribute="leading" id="zdf-nY-0vl"/>
                         </constraints>
                     </view>
                     <connections>
@@ -150,17 +151,17 @@
                         <outlet property="describeView" destination="4et-7w-gMo" id="BXe-8h-slr"/>
                         <outlet property="describeViewTopConstraint" destination="Doo-9d-kjb" id="FVC-Ma-0Qu"/>
                         <outlet property="videoImageBackView" destination="DYb-dJ-b0j" id="eiB-0q-CVc"/>
-                        <outlet property="videoImageView" destination="NY8-Dm-rpG" id="uTZ-UL-lL5"/>
-                        <outlet property="videoImageViewHeightConstrait" destination="Vzl-Yo-h2X" id="t4N-5s-RRM"/>
-                        <outlet property="videoImageViewLeadingConstraint" destination="zdf-nY-0vl" id="oYJ-oM-st3"/>
-                        <outlet property="videoImageViewTrailingConstraint" destination="50i-FA-hWa" id="nbL-Pk-3Id"/>
                         <outlet property="videoTitleLabel" destination="WZq-ic-Ep4" id="Tat-KD-05w"/>
+                        <outlet property="youtubePlayerView" destination="vMA-AX-8IV" id="5jj-Nw-zQr"/>
+                        <outlet property="youtubePlayerViewHeightConstraint" destination="73b-2T-i6x" id="pB5-tS-7ca"/>
+                        <outlet property="youtubePlayerViewLeadingConstraint" destination="FgN-9z-rw7" id="cL5-bC-FsV"/>
+                        <outlet property="youtubePlayerViewTrailingConstraint" destination="fmk-4R-iGx" id="BdK-x4-m2w"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CHx-Sz-OZ1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="2Pb-hg-Q1z">
+                <panGestureRecognizer minimumNumberOfTouches="1" id="uiu-cx-2gm">
                     <connections>
-                        <action selector="panVideoImageView:" destination="FOP-MB-orA" id="I5M-ZW-afe"/>
+                        <action selector="panYoutubePlayerView:" destination="FOP-MB-orA" id="aGZ-52-deB"/>
                     </connections>
                 </panGestureRecognizer>
             </objects>
@@ -173,9 +174,6 @@
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemTealColor">
-            <color red="0.35294117647058826" green="0.78431372549019607" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

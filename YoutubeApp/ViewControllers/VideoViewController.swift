@@ -8,8 +8,9 @@
 import UIKit
 //
 import Nuke
+import YoutubePlayer_in_WKWebView
 
-class VideoViewController: UIViewController {
+class VideoViewController: UIViewController, WKYTPlayerViewDelegate {
     
     var selectedItem: Item?
     
@@ -21,15 +22,14 @@ class VideoViewController: UIViewController {
     var minimumImageViewTrailingConstant: CGFloat {
         view.frame.width - (164 - 12)
     }
-
-    // videoImageView
-    @IBOutlet weak var videoImageView: UIImageView!
-    @IBOutlet weak var videoImageViewHeightConstrait: NSLayoutConstraint!
-    @IBOutlet weak var videoImageViewLeadingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var videoImageViewTrailingConstraint: NSLayoutConstraint!
+    
+    // YoutubePlayer
+    @IBOutlet weak var youtubePlayerView: WKYTPlayerView!
+    @IBOutlet weak var youtubePlayerViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var youtubePlayerViewLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var youtubePlayerViewTrailingConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var videoImageBackView: UIView!
-    
     
     // backView
     @IBOutlet weak var backView: UIView!
@@ -46,57 +46,69 @@ class VideoViewController: UIViewController {
     @IBOutlet weak var channelSubscriberCountLabel: UILabel!
     @IBOutlet weak var baseBackGroundView: UIView!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupViews()
+        
+        youtubePlayerView.delegate = self
 
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         UIView.animate(withDuration: 0.3) {
             self.baseBackGroundView.alpha = 1
+            
         }
+        // ビデオプレイヤー
+        guard let videId = self.selectedItem?.id.videoId else { return }
+//        youtubePlayerView.load(withVideoId: videId, playerVars: ["playsinline":1])
+        youtubePlayerView.load(withVideoId: videId)
+    }
+    //
+    func playerViewDidBecomeReady(_ playerView: WKYTPlayerView) {
+        
     }
     //
     private func setupViews() {
-        // videoImageViewを最前面に移動
-        self.view.bringSubviewToFront(videoImageView)
+        // youtubePlayerViewを最前面に移動
+        self.view.bringSubviewToFront(youtubePlayerView)
+
+        imageViewCenterY = youtubePlayerView.center.y
         
-        imageViewCenterY = videoImageView.center.y
-        
-        // ビデオイメージビュー
-        videoImageView.contentMode = .scaleAspectFill
-        videoImageView.isUserInteractionEnabled = true
-        if let url = URL(string: selectedItem?.snippet.thumbnails.medium.url ?? "" ) {
-            Nuke.loadImage(with: url, into: videoImageView)
-        }
         // チャンネルイメージビュー
         channelImageView.contentMode = .scaleAspectFill
         channelImageView.layer.cornerRadius = channelImageView.frame.size.height / 2
         if let channelUrl = URL(string: selectedItem?.channel?.items[0].snippet.thumbnails.medium.url ?? "") {
             Nuke.loadImage(with: channelUrl, into: channelImageView)
         }
-        videoTitleLabel.text = selectedItem?.snippet.title
+        guard let videoTitle = selectedItem?.snippet.title else { return }
+        videoTitleLabel.text = videoTitle
         channelTitleLabel.text = selectedItem?.channel?.items[0].snippet.title
         channelSubscriberCountLabel.text = "チャンネル登録者数 " + (selectedItem?.channel?.items[0].statistics.subscriberCount)!
 
     }
-    // パンジェスチャー
-    @IBAction func panVideoImageView(_ gesture: UIPanGestureRecognizer) {
-        guard let imageView = gesture.view else { return }
-        let move = gesture.translation(in: imageView)
+    
+    
+    @IBAction func tapVideoImageView(_ sender: Any) {
+        
+    }
+    
+    // パンジェスチャー(YoutubePlayerView)
+    @IBAction func panYoutubePlayerView(_ gesture: UIPanGestureRecognizer) {
+        guard let YoutubePlayerView = gesture.view else { return }
+        let move = gesture.translation(in: YoutubePlayerView)
         
         if gesture.state == .changed {
             // 最大値までドラッグしたら止める
             if videoImageMaxY <= move.y {
-                moveToBottom(imageView: imageView as! UIImageView)
+                moveToBottom(YTView: YoutubePlayerView as! WKYTPlayerView)
                 return
             }
             
             // imageViewをドラッグに合わせて下に移動
-            imageView.transform = CGAffineTransform(translationX: 0, y: move.y)
+            YoutubePlayerView.transform = CGAffineTransform(translationX: 0, y: move.y)
             videoImageBackView.transform = CGAffineTransform(translationX: 0, y: move.y)
             
             // imageViewの左右のpadding設定
@@ -112,20 +124,21 @@ class VideoViewController: UIViewController {
             adjustWidthChange(move: move)
             
         } else if gesture.state == .ended {
-            
-            imageViewEndedAnimation(move: move, imageView: imageView as! UIImageView)
+            imageViewEndedAnimation(move: move, YTView: YoutubePlayerView as! WKYTPlayerView)
          }
-        
+
     }
+    
     
     // MARK: - パンジェスチャーの state == .changed の動き
     // 左右の余白調整
     private func adjustPaddingChange(move: CGPoint) {
         let movingConstant = move.y / 30
         if movingConstant < 12 {
-            videoImageViewTrailingConstraint.constant = movingConstant
-            videoImageViewLeadingConstraint.constant = movingConstant
             
+            youtubePlayerViewTrailingConstraint.constant = -movingConstant
+            youtubePlayerViewLeadingConstraint.constant = movingConstant
+
             backViewTrailingConstraint.constant = -movingConstant
         }
      }
@@ -135,7 +148,7 @@ class VideoViewController: UIViewController {
         let heightRatio = 210 / videoImageMaxY
         let moveHeight = move.y * heightRatio
         backViewTopConstraint.constant = move.y
-        videoImageViewHeightConstrait.constant = 280 - moveHeight
+        youtubePlayerViewHeightConstraint.constant = 280 - moveHeight
         describeViewTopConstraint.constant = move.y * 0.8
         
         let bottomMoveY = parantViewHeight - videoImageMaxY
@@ -156,17 +169,17 @@ class VideoViewController: UIViewController {
         let originalWidth = self.view.frame.width
         let constant = originalWidth - move.y
         if minimumImageViewTrailingConstant < (constant * -1) {
-            videoImageViewTrailingConstraint.constant = minimumImageViewTrailingConstant
+            youtubePlayerViewTrailingConstraint.constant = -minimumImageViewTrailingConstant
             return
         }
         if constant < -12 {
-            videoImageViewTrailingConstraint.constant = constant * -1
+            youtubePlayerViewTrailingConstraint.constant = constant
         }
 
     }
     
     // MARK: - パンジェスチャーの state == .ended の動き
-    private func imageViewEndedAnimation(move: CGPoint,imageView: UIImageView) {
+    private func imageViewEndedAnimation(move: CGPoint,YTView: WKYTPlayerView) {
         if move.y < self.view.frame.height / 3 {
             // 元の位置に戻る
             // animate：アニメーション
@@ -174,23 +187,20 @@ class VideoViewController: UIViewController {
             //  initialSpringVelocityは、アニメーションの初速、optionsではアニメーション中に使用するタイミング曲線の種類やアニメーションの逆再生などを指定
             //  animationsクロージャの中でアニメーションしたいUIViewクラスのプロパティの値を変更
             UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.8, options: []) {
-                self.backToIdentitiyAllViews(imageView: imageView )
+                self.backToIdentitiyAllViews(YTView: YTView )
             }
         } else {
             
             UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.8, options: []) {
                 
-                self.moveToBottom(imageView: imageView )
+                self.moveToBottom(YTView: YTView )
                 
             } completion: { _ in
                 UIView.animate(withDuration: 0.2) {
-                    self.videoImageView.isHidden = true
                     self.backView.isHidden = true
                     // NotificationCenterで通知（別なビューにイメージを渡す）
-                    let image = self.videoImageView.image
-                    let userInfo:[String:Any] = ["image": image,
-                                                 "videoImageMinY": self.videoImageView.frame.minY,
-                                                 "videoImageViewWidth": self.videoImageView.frame.width   ]
+                    let userInfo:[String:Any] = ["videoPlayerMinY": YTView.frame.minY,
+                                                 "videoPlayerViewWidth": YTView.frame.width   ]
                     NotificationCenter.default.post(name: .init("thumnailImage"), object: nil, userInfo: userInfo as [AnyHashable : Any])
                     
                 } completion: { _ in
@@ -201,15 +211,16 @@ class VideoViewController: UIViewController {
         }
 
     }
-    //　下に小さく固定する
-    private func moveToBottom(imageView: UIImageView) {
+    //　下に小さく固定する(youtubePlayerView)
+    private func moveToBottom(YTView: WKYTPlayerView) {
         // CGAffineTransform translationX x,y方向に指定したtranslationの分移動
 
         // imageViewの設定（ビデオ）
-        imageView.transform = CGAffineTransform(translationX: 0, y: videoImageMaxY)
-        videoImageViewTrailingConstraint.constant = minimumImageViewTrailingConstant
-        videoImageViewHeightConstrait.constant = 70   // 最小値の70
-        videoImageViewLeadingConstraint.constant = 12
+        YTView.transform = CGAffineTransform(translationX: 0, y: videoImageMaxY)
+        
+        youtubePlayerViewTrailingConstraint.constant = -minimumImageViewTrailingConstant
+        youtubePlayerViewHeightConstraint.constant = 70   // 最小値の70
+        youtubePlayerViewLeadingConstraint.constant = 12
         
         videoImageBackView.transform = CGAffineTransform(translationX: 0, y: videoImageMaxY)
         describeView.alpha = 0
@@ -220,14 +231,16 @@ class VideoViewController: UIViewController {
         self.view.layoutIfNeeded()
     }
     // 元の位置に戻す
-    private func backToIdentitiyAllViews(imageView: UIImageView) {
+    private func backToIdentitiyAllViews(YTView: WKYTPlayerView) {
         // imageViewの設定 (.identity 元の位置)
-        imageView.transform = .identity
-        videoImageView.transform = .identity
-        videoImageViewHeightConstrait.constant = 280
-        videoImageViewLeadingConstraint.constant = 0
-        videoImageViewTrailingConstraint.constant = 0
+        YTView.transform = .identity
         
+        // youtubePlayerView
+        youtubePlayerView.transform = .identity
+        youtubePlayerViewHeightConstraint.constant = 280
+        youtubePlayerViewLeadingConstraint.constant = 0
+        youtubePlayerViewTrailingConstraint.constant = 0
+
         // backViewの設定
         backViewTrailingConstraint.constant = 0
         backViewBottomConstraint.constant = 0
@@ -246,3 +259,4 @@ class VideoViewController: UIViewController {
 
 
 }
+
