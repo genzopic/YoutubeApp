@@ -107,8 +107,9 @@ extension SearchViewController {
     private func fetchYoutubeSearchInfo(searchText: String) {
         let parms = [
             "q": searchText,
-            "part": "snippet"
-        ]
+            "part": "snippet",
+            "maxResults": 20
+        ] as [String : Any]
         API.shared.request(path: .search, parms: parms, type: Video.self) { (video) in
             self.video = video
             self.fetchYoutubeChannelInfo()

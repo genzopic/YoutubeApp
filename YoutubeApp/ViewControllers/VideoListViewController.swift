@@ -8,6 +8,7 @@
 import UIKit
 //
 import Alamofire
+import YoutubePlayer_in_WKWebView
 
 class VideoListViewController: UIViewController {
     
@@ -35,6 +36,10 @@ class VideoListViewController: UIViewController {
     @IBOutlet weak var bottomVideoImageView: UIImageView!
     @IBOutlet weak var bottomVideoImageWidth: NSLayoutConstraint!
     @IBOutlet weak var bottomVideoImageHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var bottomVideoPlayerView: WKYTPlayerView!
+    @IBOutlet weak var bottomVideoPlayerWidth: NSLayoutConstraint!
+    @IBOutlet weak var bottomVideoPlayerHeight: NSLayoutConstraint!
     //
     @IBOutlet weak var bottomSubscribeView: UIView!
     @IBOutlet weak var bottomVideoTitleLabel: UILabel!
@@ -80,17 +85,16 @@ class VideoListViewController: UIViewController {
     @objc private func showThumnailImage(notification: NSNotification) {
         
         guard let userInfo = notification.userInfo as? [String:Any] else { return }
-        guard let image = userInfo["image"] as? UIImage else { return }
-        guard let videoImageMinY = userInfo["videoImageMinY"] as? CGFloat else { return }
-        guard let videoImageViewWidth = userInfo["videoImageViewWidth"] as? CGFloat else { return }
+        guard let videoPlayerMinY = userInfo["videoPlayerMinY"] as? CGFloat else { return }
+        guard let videoPlayerViewWidth = userInfo["videoPlayerViewWidth"] as? CGFloat else { return }
         
-        let diffBottomConstant = videoImageMinY - bottomVideoView.frame.minY
-        bottomVideoImageWidth.constant = videoImageViewWidth
+        let diffBottomConstant = videoPlayerMinY - bottomVideoView.frame.minY
+        bottomVideoPlayerWidth.constant = videoPlayerViewWidth
         bottomVideoViewBottom.constant -= diffBottomConstant
-        bottomVideoImageView.image = image
+        bottomVideoPlayerView.load(withVideoId: (selectedItem?.id.videoId)!)
         bottomVideoTitleLabel.text = selectedItem?.snippet.title
         bottomVideoDescriptoin.text = selectedItem?.snippet.description
-        
+
         bottomVideoView.isHidden = false
         self.bottomSubscribeView.isHidden = false
 
@@ -145,8 +149,10 @@ extension VideoListViewController {
     private func fetchYoutubeSearchInfo() {
         let parms = [
             "q": "drikin",
-            "part": "snippet"
-        ]
+            "part": "snippet",
+            "type": "video",
+            "maxResults": 20
+        ] as [String : Any]
         API.shared.request(path: .search, parms: parms, type: Video.self) { (video) in
             self.videoItems = video.items
             let id = self.videoItems[0].snippet.channelId

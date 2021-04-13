@@ -14,8 +14,14 @@ class Video: Decodable {
 
 class Item: Decodable {
     //
-    var channel: Channel?
+    let id: Id
     let snippet: Snippet
+    var channel: Channel?
+}
+
+class Id: Decodable {
+    let kind: String
+    let videoId: String?
 }
 
 class Snippet: Decodable {
