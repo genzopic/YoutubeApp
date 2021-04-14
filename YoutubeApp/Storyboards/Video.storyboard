@@ -102,7 +102,7 @@
                                     <constraint firstItem="Dom-oc-73M" firstAttribute="top" secondItem="4et-7w-gMo" secondAttribute="top" constant="10" id="vxm-5n-acp"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vMA-AX-8IV" customClass="WKYTPlayerView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vMA-AX-8IV" customClass="YTPlayerView">
                                 <rect key="frame" x="0.0" y="44" width="414" height="280"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <gestureRecognizers/>

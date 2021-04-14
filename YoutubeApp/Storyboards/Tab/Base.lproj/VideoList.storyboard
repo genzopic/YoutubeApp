@@ -82,7 +82,7 @@
                                             <constraint firstAttribute="trailing" secondItem="lvc-mB-5d0" secondAttribute="trailing" id="skx-hR-bi8"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZgC-50-0sk" customClass="WKYTPlayerView">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZgC-50-0sk" customClass="YTPlayerView">
                                         <rect key="frame" x="0.0" y="0.0" width="140" height="70"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>

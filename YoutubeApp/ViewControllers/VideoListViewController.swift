@@ -8,9 +8,10 @@
 import UIKit
 //
 import Alamofire
-import YoutubePlayer_in_WKWebView
+//import YoutubePlayer_in_WKWebView
+import youtube_ios_player_helper
 
-class VideoListViewController: UIViewController, WKYTPlayerViewDelegate {
+class VideoListViewController: UIViewController, YTPlayerViewDelegate {
     
     // ヘッダービュー
     @IBOutlet weak var headerView: UIView!
@@ -32,12 +33,8 @@ class VideoListViewController: UIViewController, WKYTPlayerViewDelegate {
     @IBOutlet weak var bottomVideoViewLeading: NSLayoutConstraint!
     @IBOutlet weak var bottomVideoViewHeight: NSLayoutConstraint!
     @IBOutlet weak var bottomVideoViewBottom: NSLayoutConstraint!
-    // bottomVideoImageの制約（サムネイル画像）
-    @IBOutlet weak var bottomVideoImageView: UIImageView!
-    @IBOutlet weak var bottomVideoImageWidth: NSLayoutConstraint!
-    @IBOutlet weak var bottomVideoImageHeight: NSLayoutConstraint!
-    
-    @IBOutlet weak var bottomVideoPlayerView: WKYTPlayerView!
+    // bottomVideoPlayerの制約（動画再生）
+    @IBOutlet weak var bottomVideoPlayerView: YTPlayerView!
     @IBOutlet weak var bottomVideoPlayerWidth: NSLayoutConstraint!
     @IBOutlet weak var bottomVideoPlayerHeight: NSLayoutConstraint!
     //
@@ -101,7 +98,7 @@ class VideoListViewController: UIViewController, WKYTPlayerViewDelegate {
 
     }
     
-    func playerViewDidBecomeReady(_ playerView: WKYTPlayerView) {
+    func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
         bottomVideoPlayerView.isHidden = false
     }
     
@@ -351,8 +348,11 @@ extension VideoListViewController {
             let storyboard = UIStoryboard(name: "Video", bundle: nil)
             let videoViewController = storyboard.instantiateViewController(identifier: "VideoViewController") as! VideoViewController
             videoViewController.selectedItem = self.selectedItem
-            self.present(videoViewController, animated: false, completion: nil)
-            self.bottomVideoViewBackToIdentity()
+//            self.present(videoViewController, animated: false, completion: nil)
+//            self.bottomVideoViewBackToIdentity()
+            self.present(videoViewController, animated: false) {
+                self.bottomVideoViewBackToIdentity()
+            }
         }
 
     }
@@ -361,15 +361,16 @@ extension VideoListViewController {
         
         let topSafeArea = self.view.safeAreaInsets.top
         let bottomSafeArea = self.view.safeAreaInsets.bottom
-                
+        
         // bottomVideoView
         bottomVideoViewLeading.constant = 0
         bottomVideoViewTraing.constant = 0
         bottomVideoViewBottom.constant = -bottomSafeArea
         bottomVideoViewHeight.constant = self.view.frame.height - topSafeArea
-        // bottomVideoImageView
-        bottomVideoImageWidth.constant = self.view.frame.width
-        bottomVideoImageHeight.constant = 280
+        // bottomVideoPlayerView
+        print("self.view.frame.width: ", self.view.frame.width)
+        bottomVideoPlayerWidth.constant = self.view.frame.width
+        bottomVideoPlayerHeight.constant = 280
         //
         tabBarController?.tabBar.isHidden = true
         // アニメーションを実行するためにこれが必須
@@ -384,9 +385,9 @@ extension VideoListViewController {
         bottomVideoViewTraing.constant = 12
         bottomVideoViewBottom.constant = 19
         bottomVideoViewHeight.constant = 70
-        // bottomVideoImageView
-        bottomVideoImageWidth.constant = 126
-        bottomVideoImageHeight.constant = 70
+        // bottomVideoPlayerView
+        bottomVideoPlayerWidth.constant = 126
+        bottomVideoPlayerHeight.constant = 70
         //
         bottomVideoView.isHidden = true
         tabBarController?.tabBar.isHidden = false

@@ -8,9 +8,10 @@
 import UIKit
 //
 import Nuke
-import YoutubePlayer_in_WKWebView
+//import YoutubePlayer_in_WKWebView
+import youtube_ios_player_helper
 
-class VideoViewController: UIViewController, WKYTPlayerViewDelegate {
+class VideoViewController: UIViewController, YTPlayerViewDelegate {
     
     var selectedItem: Item?
     
@@ -24,7 +25,7 @@ class VideoViewController: UIViewController, WKYTPlayerViewDelegate {
     }
     
     // YoutubePlayer
-    @IBOutlet weak var youtubePlayerView: WKYTPlayerView!
+    @IBOutlet weak var youtubePlayerView: YTPlayerView!
     @IBOutlet weak var youtubePlayerViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var youtubePlayerViewLeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var youtubePlayerViewTrailingConstraint: NSLayoutConstraint!
@@ -50,7 +51,6 @@ class VideoViewController: UIViewController, WKYTPlayerViewDelegate {
         super.viewDidLoad()
         
         setupViews()
-
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -65,15 +65,23 @@ class VideoViewController: UIViewController, WKYTPlayerViewDelegate {
         youtubePlayerView.load(withVideoId: videId)
     }
     //
-    func playerViewDidBecomeReady(_ playerView: WKYTPlayerView) {
-        youtubePlayerView.isHidden = false
+    func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
+//        self.youtubePlayerView.isHidden = false
+        DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
+            UIView.animate(withDuration: 0.3) {
+                self.youtubePlayerView.alpha = 1
+            }
+        }
+
     }
     //
     private func setupViews() {
         youtubePlayerView.delegate = self
 
         // youtubePlayerViewを最前面に移動
-        youtubePlayerView.isHidden = true
+//        youtubePlayerView.isHidden = true
+        youtubePlayerView.alpha = 0
+        
         self.view.bringSubviewToFront(youtubePlayerView)
 
         imageViewCenterY = youtubePlayerView.center.y
@@ -104,7 +112,7 @@ class VideoViewController: UIViewController, WKYTPlayerViewDelegate {
         if gesture.state == .changed {
             // 最大値までドラッグしたら止める
             if videoImageMaxY <= move.y {
-                moveToBottom(YTView: YoutubePlayerView as! WKYTPlayerView)
+                moveToBottom(YTView: YoutubePlayerView as! YTPlayerView)
                 return
             }
             
@@ -125,7 +133,7 @@ class VideoViewController: UIViewController, WKYTPlayerViewDelegate {
             adjustWidthChange(move: move)
             
         } else if gesture.state == .ended {
-            imageViewEndedAnimation(move: move, YTView: YoutubePlayerView as! WKYTPlayerView)
+            imageViewEndedAnimation(move: move, YTView: YoutubePlayerView as! YTPlayerView)
          }
 
     }
@@ -180,7 +188,7 @@ class VideoViewController: UIViewController, WKYTPlayerViewDelegate {
     }
     
     // MARK: - パンジェスチャーの state == .ended の動き
-    private func imageViewEndedAnimation(move: CGPoint,YTView: WKYTPlayerView) {
+    private func imageViewEndedAnimation(move: CGPoint,YTView: YTPlayerView) {
         if move.y < self.view.frame.height / 3 {
             // 元の位置に戻る
             // animate：アニメーション
@@ -205,7 +213,9 @@ class VideoViewController: UIViewController, WKYTPlayerViewDelegate {
                     NotificationCenter.default.post(name: .init("thumnailImage"), object: nil, userInfo: userInfo as [AnyHashable : Any])
                     
                 } completion: { _ in
-                    self.dismiss(animated: false, completion: nil)
+                    DispatchQueue.main.asyncAfter(deadline: .now()+0.7) {
+                        self.dismiss(animated: false, completion: nil)
+                    }
                 }
             }
             
@@ -213,7 +223,7 @@ class VideoViewController: UIViewController, WKYTPlayerViewDelegate {
 
     }
     //　下に小さく固定する(youtubePlayerView)
-    private func moveToBottom(YTView: WKYTPlayerView) {
+    private func moveToBottom(YTView: YTPlayerView) {
         // CGAffineTransform translationX x,y方向に指定したtranslationの分移動
 
         // imageViewの設定（ビデオ）
@@ -232,7 +242,7 @@ class VideoViewController: UIViewController, WKYTPlayerViewDelegate {
         self.view.layoutIfNeeded()
     }
     // 元の位置に戻す
-    private func backToIdentitiyAllViews(YTView: WKYTPlayerView) {
+    private func backToIdentitiyAllViews(YTView: YTPlayerView) {
         // imageViewの設定 (.identity 元の位置)
         YTView.transform = .identity
         
