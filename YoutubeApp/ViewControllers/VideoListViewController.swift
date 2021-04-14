@@ -361,6 +361,7 @@ extension VideoListViewController {
         
         let topSafeArea = self.view.safeAreaInsets.top
         let bottomSafeArea = self.view.safeAreaInsets.bottom
+                
         // bottomVideoView
         bottomVideoViewLeading.constant = 0
         bottomVideoViewTraing.constant = 0
