@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import YoutubePlayer_in_WKWebView
 
-class VideoListViewController: UIViewController {
+class VideoListViewController: UIViewController, WKYTPlayerViewDelegate {
     
     // ヘッダービュー
     @IBOutlet weak var headerView: UIView!
@@ -64,9 +64,9 @@ class VideoListViewController: UIViewController {
     }
     
     private func setupNotifications() {
-        // 通知を受け取り画面下にサムネイル画像を表示する
+        // 動画再生画面から、下にドラッグした時に、通知を受け取り画面下に固定表示する
         NotificationCenter.default.addObserver(self, selector: #selector(showThumnailImage), name: .init("thumnailImage"), object: nil)
-        
+        // 検索画面からの通知を受けとる
         NotificationCenter.default.addObserver(self, selector: #selector(showSearchedItem), name: .init("searchedItem"), object: nil)
     }
     
@@ -91,17 +91,25 @@ class VideoListViewController: UIViewController {
         let diffBottomConstant = videoPlayerMinY - bottomVideoView.frame.minY
         bottomVideoPlayerWidth.constant = videoPlayerViewWidth
         bottomVideoViewBottom.constant -= diffBottomConstant
-        bottomVideoPlayerView.load(withVideoId: (selectedItem?.id.videoId)!)
         bottomVideoTitleLabel.text = selectedItem?.snippet.title
         bottomVideoDescriptoin.text = selectedItem?.snippet.description
 
         bottomVideoView.isHidden = false
-        self.bottomSubscribeView.isHidden = false
+        bottomSubscribeView.isHidden = false
+        bottomVideoPlayerView.isHidden = true
+        bottomVideoPlayerView.load(withVideoId: (selectedItem?.id.videoId)!)
 
+    }
+    
+    func playerViewDidBecomeReady(_ playerView: WKYTPlayerView) {
+        bottomVideoPlayerView.isHidden = false
     }
     
     // MARK: ビューの初期設定
     private func setupViews() {
+        
+        bottomVideoPlayerView.delegate = self
+        
         // 最前面にbottomVideoViewを表示
         view.bringSubviewToFront(bottomVideoView)
         
@@ -151,7 +159,7 @@ extension VideoListViewController {
             "q": "drikin",
             "part": "snippet",
             "type": "video",
-            "maxResults": 20
+            "maxResults": 10
         ] as [String : Any]
         API.shared.request(path: .search, parms: parms, type: Video.self) { (video) in
             self.videoItems = video.items

@@ -50,8 +50,6 @@ class VideoViewController: UIViewController, WKYTPlayerViewDelegate {
         super.viewDidLoad()
         
         setupViews()
-        
-        youtubePlayerView.delegate = self
 
     }
     
@@ -68,11 +66,14 @@ class VideoViewController: UIViewController, WKYTPlayerViewDelegate {
     }
     //
     func playerViewDidBecomeReady(_ playerView: WKYTPlayerView) {
-        
+        youtubePlayerView.isHidden = false
     }
     //
     private func setupViews() {
+        youtubePlayerView.delegate = self
+
         // youtubePlayerViewを最前面に移動
+        youtubePlayerView.isHidden = true
         self.view.bringSubviewToFront(youtubePlayerView)
 
         imageViewCenterY = youtubePlayerView.center.y

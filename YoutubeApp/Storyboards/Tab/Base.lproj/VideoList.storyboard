@@ -40,14 +40,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5eY-wg-5xn">
                                 <rect key="frame" x="12" y="724" width="390" height="70"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bM4-sO-l7h">
-                                        <rect key="frame" x="0.0" y="0.0" width="140" height="70"/>
-                                        <color key="backgroundColor" systemColor="systemBlueColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="70" id="RRL-gB-im8"/>
-                                            <constraint firstAttribute="width" constant="140" id="rWj-vG-Umr"/>
-                                        </constraints>
-                                    </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ypa-QE-ilh">
                                         <rect key="frame" x="140" y="0.0" width="250" height="70"/>
                                         <subviews>
@@ -103,14 +95,11 @@
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="Ypa-QE-ilh" secondAttribute="bottom" id="31N-0P-SKZ"/>
                                     <constraint firstAttribute="height" constant="70" id="G4i-Jx-3rn"/>
-                                    <constraint firstItem="bM4-sO-l7h" firstAttribute="leading" secondItem="5eY-wg-5xn" secondAttribute="leading" id="J3Q-mj-rR4"/>
                                     <constraint firstItem="Ypa-QE-ilh" firstAttribute="top" secondItem="5eY-wg-5xn" secondAttribute="top" id="Jfj-EE-ZkS"/>
                                     <constraint firstAttribute="trailing" secondItem="Ypa-QE-ilh" secondAttribute="trailing" id="ZEc-GX-viJ"/>
-                                    <constraint firstItem="bM4-sO-l7h" firstAttribute="top" secondItem="5eY-wg-5xn" secondAttribute="top" id="ges-MN-dE7"/>
                                     <constraint firstItem="ZgC-50-0sk" firstAttribute="leading" secondItem="5eY-wg-5xn" secondAttribute="leading" id="hxm-sG-A4P"/>
                                     <constraint firstItem="Ypa-QE-ilh" firstAttribute="leading" secondItem="ZgC-50-0sk" secondAttribute="trailing" id="l4E-26-DEK"/>
                                     <constraint firstItem="ZgC-50-0sk" firstAttribute="top" secondItem="5eY-wg-5xn" secondAttribute="top" id="opV-Aa-NHQ"/>
-                                    <constraint firstItem="Ypa-QE-ilh" firstAttribute="leading" secondItem="bM4-sO-l7h" secondAttribute="trailing" id="pNX-2p-DtR"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9RW-7T-VNM">
@@ -182,9 +171,6 @@
                         <outlet property="bottomCloseButton" destination="lvc-mB-5d0" id="fi6-5E-szU"/>
                         <outlet property="bottomSubscribeView" destination="Ypa-QE-ilh" id="k8M-PN-07u"/>
                         <outlet property="bottomVideoDescriptoin" destination="epg-YJ-zWT" id="Gmc-Hk-hXO"/>
-                        <outlet property="bottomVideoImageHeight" destination="RRL-gB-im8" id="Snh-e3-efB"/>
-                        <outlet property="bottomVideoImageView" destination="bM4-sO-l7h" id="GC5-o7-AsS"/>
-                        <outlet property="bottomVideoImageWidth" destination="rWj-vG-Umr" id="zDY-i1-bad"/>
                         <outlet property="bottomVideoPlayerHeight" destination="p6H-eX-JHe" id="Hrd-OY-Mm0"/>
                         <outlet property="bottomVideoPlayerView" destination="ZgC-50-0sk" id="XDa-gD-dD9"/>
                         <outlet property="bottomVideoPlayerWidth" destination="Qz7-gv-mlq" id="dpq-wu-4JT"/>
@@ -214,9 +200,6 @@
         <image name="search" width="512" height="512"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
